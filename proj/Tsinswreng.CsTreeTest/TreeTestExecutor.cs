@@ -303,12 +303,16 @@ public static class ExtnTreeTestExecutor{
 			}
 		}
 		System.Console.WriteLine();
-		WriteWithColor("[CsTest] ", ConsoleColor.Cyan);
-		Console.Write($"Total={summary.Total}, ");
+		WriteWithColor($"[{nameof(CsTreeTest)}]", ConsoleColor.Cyan);
+		System.Console.WriteLine();
+		Console.Write($"Total={summary.Total}");
+		System.Console.WriteLine();
 		WriteWithColor($"Passed={summary.Passed}", summary.Passed > 0 ? ConsoleColor.Green : Console.ForegroundColor);
-		Console.Write(", ");
+		System.Console.WriteLine();
 		WriteWithColor($"Failed={summary.Failed}", summary.Failed > 0 ? ConsoleColor.Red : Console.ForegroundColor);
-		Console.WriteLine($", Elapsed={summary.Elapsed}");
+		System.Console.WriteLine();
+		Console.WriteLine($"Elapsed={summary.Elapsed}");
+		System.Console.WriteLine();
 	}
 	
 
