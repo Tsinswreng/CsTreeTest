@@ -1,6 +1,12 @@
 #import "@preview/tsinswreng-auto-heading:0.1.0": auto-heading
 #let H = auto-heading;
 
+#H[v0.1.1-alpha][
+	#H[取消CsCore本地依賴][
+		[2026-05-20T17:37:38.831+08:00_W21-3]
+	]
+]
+
 #H[v0.1.0-alpha][
 	#H[增`Assert.IsTrue` API][
 		[2026-05-20T17:20:50.095+08:00_W21-3]

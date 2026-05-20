@@ -8,7 +8,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Include="../TypeAlias.cs" />
-		<ProjectReference Include="../../../Tsinswreng.CsCore/proj/Tsinswreng.CsCore/Tsinswreng.CsCore.csproj" />
+		<PackageReference Include="Tsinswreng.CsCore" Version="0.0.1-alpha" />
 		<!-- <ProjectReference Include="../../../Tsinswreng.CsU128Id/proj/Tsinswreng.CsU128Id/Tsinswreng.CsU128Id.csproj" /> -->
 		<PackageReference Include="Tsinswreng.CsU128Id" Version="0.0.1-alpha" />
 	</ItemGroup>
