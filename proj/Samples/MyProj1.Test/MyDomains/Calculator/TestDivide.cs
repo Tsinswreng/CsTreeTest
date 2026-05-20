@@ -12,20 +12,14 @@ public partial class TestCalculator {
 		);
 
 		var R = register.Register;
-
+		var T = Assert.IsTrue;
 		R("positive", async (o) => {
-			if(!Calculator.TryIntDivide(20, 4, out var R)){
-				throw new Exception("Expected true but got false");
-			}
-			if(R != 5){
-				throw new Exception($"Expected 5 but got {R}");
-			}
+			T(Calculator.TryIntDivide(20, 4, out var R));
+			T(R==5);
 			return null;
 		});
 		R("Divide by zero", async (o) => {
-			if(Calculator.TryIntDivide(20, 0, out var R)){
-				throw new Exception("Expected false but got true");
-			}
+			T(!Calculator.TryIntDivide(20, 0, out var R));
 			return null;
 		});
 	}

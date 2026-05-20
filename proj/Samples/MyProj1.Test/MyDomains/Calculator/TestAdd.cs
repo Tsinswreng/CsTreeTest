@@ -11,20 +11,17 @@ public partial class TestCalculator {
 			"YourTestNamePrefix" // optional
 		);
 		var R = register.Register;
+		var T = Assert.IsTrue;
 		R("Add positive numbers", async (o) => {
-			var r = Calculator.Add(5, 3);
-			if (r != 8) {
-				throw new Exception($"Expected 8 but got {r}");
-			}
+			T(Calculator.Add(5, 3)==8);
+			T(Calculator.Add(6, 4)==10);
 			return null;
 		});
 		//you can change the props of `register` here and then you can still use `R` directly
 		//e.g. register.UniqNamePrefix = "NewPrefix";
 		R("Add positive and negative numbers", async (o) => {
 			var r = Calculator.Add(5, -3);
-			if (r != 2) {
-				throw new Exception($"Expected 2 but got {r}");
-			}
+			T(r==2);
 			return null;
 		});
 	}

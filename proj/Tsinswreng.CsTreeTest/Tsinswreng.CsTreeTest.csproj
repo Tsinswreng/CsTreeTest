@@ -5,7 +5,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<PackageId>Tsinswreng.CsTreeTest</PackageId>
-		<Version>0.1.0-alpha</Version>
+		<Version>0.1.1-alpha</Version>
 		<Authors>Tsinswreng</Authors>
 		<Description>Tree-structured test framework with explicit registration, dependency-injection integration, and parallel or ordered execution.</Description>
 		<PackageTags>Testing;Tree;DI;UnitTest;Framework</PackageTags>
