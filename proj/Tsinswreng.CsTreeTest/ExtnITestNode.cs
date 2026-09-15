@@ -5,7 +5,7 @@ namespace Tsinswreng.CsTreeTest;
 
 // ITestNode 的擴展：掛子節點 / 建註冊器。
 // 聲明文件：傳統 this 擴展（調用方寫法與 extension 塊一致）+ partial method 拆分；實現見 ExtnITestNode.Impl.cs。
-public static partial class ExtnITestNode{
+public static partial class ITestNodeExtn{
 	/// Make a new child of self（普通子節點）。
 	public static partial ITestNode NewChild(this ITestNode z, str? UniqName = null);
 

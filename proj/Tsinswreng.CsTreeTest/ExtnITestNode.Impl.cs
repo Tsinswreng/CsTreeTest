@@ -4,7 +4,7 @@ using Tsinswreng.CsU128Id;
 namespace Tsinswreng.CsTreeTest;
 
 // 實現文件：只放函數實現。
-public static partial class ExtnITestNode{
+public static partial class ITestNodeExtn{
 	public static partial ITestNode NewChild(this ITestNode z, str? UniqName){
 		var R = new TestNode(){UniqName = UniqName ?? U128Id.NewUlid().ToLow64Base()};
 		z.Children.Add(R);
