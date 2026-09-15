@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- 本倉測試直接本地引用庫源碼，不經過 NuGet；驗證 AOT 產物走 Scripts/TestAot -->
+		<ProjectReference Include="../Tsinswreng.CsTreeTest/Tsinswreng.CsTreeTest.csproj" />
+		<!-- 入口與 DiEtTestMgr 用例需要完整 DI（ServiceCollection/BuildServiceProvider）；
+		     Directory.Build.props 只提供 Abstractions 6.0.0，與完整 DI 10.0.0 衝突，
+		     故在此 Update 到 10.0.0（只影響本工程） -->
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+		<PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
+	</ItemGroup>
+
+</Project>

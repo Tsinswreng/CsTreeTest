@@ -1,0 +1,28 @@
+# 驗證流水線：PR / 推 master 時跑整倉驗證（AOT 發布測試 + 庫 Release 構建）
+name: Verify
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up .NET 10 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      # Release 子命令在無 v* 標籤時只做驗證（Verify），測試失敗會非零退出
+      - name: Run CsTreeTest release script
+        run: dotnet run --project proj/Tsinswreng.CsTreeTest.Scripts/Tsinswreng.CsTreeTest.Scripts.csproj --configuration Release -- Release

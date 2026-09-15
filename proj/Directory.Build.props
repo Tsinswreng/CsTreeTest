@@ -7,7 +7,7 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<ItemGroup>
-		<Compile Include="../TypeAlias.cs" />
+		<Compile Include="$(MSBuildThisFileDirectory)TypeAlias.cs" />
 		<PackageReference Include="Tsinswreng.CsCore" Version="0.0.1-alpha" />
 		<!-- <ProjectReference Include="../../../Tsinswreng.CsU128Id/proj/Tsinswreng.CsU128Id/Tsinswreng.CsU128Id.csproj" /> -->
 		<PackageReference Include="Tsinswreng.CsU128Id" Version="0.0.1-alpha" />

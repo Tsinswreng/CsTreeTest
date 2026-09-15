@@ -124,6 +124,22 @@ public static class ExtnITestNode{
 		){
 			return new TestFnRegister(z, TesterType, TesteeTypes, TesteeFnNames, UniqNamePrefix);
 		}
+		[Doc(@$"Same as {nameof(MkTestFnRegister)} but tester type is inferred from the
+		generic parameter `TTester`; testee types / fn names are optional (default empty,
+		they are only used for the future filtering indexes)
+		")]
+		public ITestFnRegister MkTestFnRegister<TTester>(
+			IList<Type>? TesteeTypes = null
+			,IList<str>? TesteeFnNames = null
+			,str UniqNamePrefix = ""
+		){
+			return new TestFnRegister(
+				z, typeof(TTester)
+				,TesteeTypes ?? []
+				,TesteeFnNames ?? []
+				,UniqNamePrefix
+			);
+		}
 		
 	}
 }
