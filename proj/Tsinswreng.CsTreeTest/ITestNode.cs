@@ -3,10 +3,7 @@ using Tsinswreng.CsU128Id;
 
 namespace Tsinswreng.CsTreeTest;
 
-[Doc(@$"Node of test tree.
-
-Running a node of test tree  is to run all its children test cases.
-")]
+// 樹節點。跑一個節點 = 跑它的所有子用例。
 public interface ITestNode{
 	
 	public str UniqName{get;set;}
@@ -43,7 +40,7 @@ public interface ITesterNode:ITestNode{
 	public Type? TesterType{get;set;}
 }
 
-
+// 樹節點默認實現：純數據類型，無方法體可分離（保持單文件）。
 public class TestNode : ITestNode{
 	public str UniqName{get;set;} = U128Id.NewUlid().ToLow64Base();
 	public ITestCase? Data{get;set;}
@@ -53,93 +50,7 @@ public class TestNode : ITestNode{
 	public bool IsParallelRecursive{get;set;} = false;
 }
 
+/// 掛 tester 的節點：帶 TesterType。
 public class TesterNode : TestNode, ITesterNode{
 	public Type? TesterType{get;set;}
-}
-
-public static class ExtnITestNode{
-	extension(ITestNode z){
-		[Doc("Make a new child of self")]
-		public ITestNode NewChild(str? UniqName = null){
-			var R = new TestNode(){UniqName = UniqName ?? U128Id.NewUlid().ToLow64Base()};
-			z.Children.Add(R);
-			R.Parents.Add(z);
-			return R;
-		}
-		public ITestNode NewChild<T>(str? UniqName = null){
-			var R = new TesterNode(){
-				UniqName = UniqName ?? U128Id.NewUlid().ToLow64Base()
-				,TesterType = typeof(T)
-			};
-			z.Children.Add(R);
-			R.Parents.Add(z);
-			return R;
-		}
-	}
-	extension(ITestNode z){
-		[Doc(@$"Make a function to register `{nameof(FnTest)}`.
-		this can help you simplify your code
-		,without duplicately passing the same `{nameof(Type)}`
-		")]
-		[Obsolete(@$"use {nameof(MkTestFnRegister)}")]
-		public Func<
-			str, FnTest, nil
-		> MkFnRegisterTest(
-			Type TesterType
-			,Type TesteeType
-			,str UniqNamePrefix = ""
-		){
-			return (str UniqName, FnTest Fn) => {
-				var Case = new TestCase{
-					UniqName = UniqNamePrefix+UniqName,
-					TesterType = TesterType,
-					TesteeType = TesteeType,
-					FnTest = Fn,
-				};
-				z.Children.Add(new TestNode{
-					Data = Case,
-				});
-				return NIL;
-			};
-		}
-		
-		// [Doc(@$"Make a register to register `{nameof(FnTest)}`.
-		// this can help you simplify your code
-		// ,without duplicately passing the same `{nameof(Type)}`
-		// ")]
-		// [Obsolete]
-		// public ITestFnRegister MkTestFnRegister(
-		// 	Type TesterType
-		// 	,Type TesteeType
-		// 	,str UniqNamePrefix = ""
-		// ){
-		// 	return new TestFnRegister(z, TesterType, TesteeType, UniqNamePrefix);
-		// }
-		
-		public ITestFnRegister MkTestFnRegister(
-			Type TesterType
-			,IList<Type> TesteeTypes
-			,IList<str> TesteeFnNames
-			,str UniqNamePrefix = ""
-		){
-			return new TestFnRegister(z, TesterType, TesteeTypes, TesteeFnNames, UniqNamePrefix);
-		}
-		[Doc(@$"Same as {nameof(MkTestFnRegister)} but tester type is inferred from the
-		generic parameter `TTester`; testee types / fn names are optional (default empty,
-		they are only used for the future filtering indexes)
-		")]
-		public ITestFnRegister MkTestFnRegister<TTester>(
-			IList<Type>? TesteeTypes = null
-			,IList<str>? TesteeFnNames = null
-			,str UniqNamePrefix = ""
-		){
-			return new TestFnRegister(
-				z, typeof(TTester)
-				,TesteeTypes ?? []
-				,TesteeFnNames ?? []
-				,UniqNamePrefix
-			);
-		}
-		
-	}
 }

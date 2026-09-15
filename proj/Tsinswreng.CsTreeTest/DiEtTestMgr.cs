@@ -1,4 +1,3 @@
-using System.ComponentModel.Design;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 using Tsinswreng.CsCore;
@@ -40,10 +39,9 @@ public interface IDiEtTestMgr:ITester{
 	public IList<Func<IServiceProvider, ITestNode, nil>> RegisterTestFns{get;set;}
 }
 
-public abstract class DiEtTestMgr:IDiEtTestMgr{
-	public DiEtTestMgr(){
-		this.RegisterTestsInto(this.TestNode);
-	}
+// 聲明文件：屬性 + 構造函數聲明（partial method）；實現見 DiEtTestMgr.Impl.cs。
+public abstract partial class DiEtTestMgr:IDiEtTestMgr{
+	public partial DiEtTestMgr();
 	public IDictionary<str, IList<ITestNode>> UniqName_TestNode{get;set;} = new Dictionary<str, IList<ITestNode>>();
 	public IDictionary<Type, IList<ITestNode>> TesterType_TestNode{get;set;} = new Dictionary<Type, IList<ITestNode>>();
 	public IDictionary<Type, IList<ITestNode>> TesteeType_TestNode{get;set;} = new Dictionary<Type, IList<ITestNode>>();
@@ -54,179 +52,62 @@ public abstract class DiEtTestMgr:IDiEtTestMgr{
 	public abstract ITestNode RegisterTestsInto(ITestNode? Test);
 }
 
+// IDiEtTestMgr 的擴展：註冊/索引/初始化。
+// 聲明文件：傳統 this 擴展（調用方寫法與 extension 塊一致）+ partial method 拆分；實現見 DiEtTestMgr.Impl.cs。
+public static partial class ExtnDiEtTestMgr{
+	[Doc($$"""
+	Register an impl class of {{nameof(ITester)}}
+	both into {{nameof(ServiceCollection)}} and {{nameof(TestNode)}}
+	""")]
+	public static partial void RegisterTester<
+		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+		T
+	>(this IDiEtTestMgr z, str? NewNodeUniqName = null)
+		where T:class, ITester;
 
-public static class ExtnDiEtTestMgr{
-	extension(IDiEtTestMgr z){
-		[Doc($$"""
-		Register an impl class of {{nameof(ITester)}}
-		both into {{nameof(ServiceCollection)}} and {{nameof(TestNode)}}
-		""")]
-		public void RegisterTester<
-			[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
-			T
-		>(str? NewNodeUniqName = null)
-			where T:class, ITester
-		{
-			z.DiFns.Add((SvcC)=>{
-				SvcC.Add(ServiceDescriptor.Singleton(typeof(T), typeof(T)));
-				return NIL;
-			});
-			z.RegisterTestFns.Add((SvcP, TestNode)=>{
-				if(z.TesterType_TestNode.ContainsKey(typeof(T))){
-					throw new InvalidOperationException(
-						$"Duplicated tester type: {typeof(T)}"
-					);
-				}
-				if(NewNodeUniqName != null && z.UniqName_TestNode.ContainsKey(NewNodeUniqName)){
-					throw new InvalidOperationException($"Duplicated test node uniq name: {NewNodeUniqName}");
-				}
-				ITester t = SvcP.GetRequiredService<T>();
-				ITestNode node = TestNode.NewChild<T>(NewNodeUniqName);
-				if(z.UniqName_TestNode.ContainsKey(node.UniqName)){
-					throw new InvalidOperationException($"Duplicated test node uniq name: {node.UniqName}");
-				}
-				z.UniqName_TestNode.Add(node.UniqName, [node]);
-				z.TesterType_TestNode.Add(typeof(T), [node]);
-				t.RegisterTestsInto(node);
-				IndexTesteeForSubtree(z, node);
-				return NIL;
-			});
-		}
-		[Doc(@$"Register another {nameof(IDiEtTestMgr)} as self's subnode")]
-		public void RegisterSubMgr(IDiEtTestMgr SubMgr){
-			var oldRoot = SubMgr.TestNode;
-			var mountedRoot = z.TestNode.NewChild();
-			mountedRoot.Ordered = oldRoot.Ordered;
-			mountedRoot.IsParallelRecursive = oldRoot.IsParallelRecursive;
-			SubMgr.TestNode = mountedRoot;
-			z.DiFns.AddRange(SubMgr.DiFns);
-			foreach(var subFn in SubMgr.RegisterTestFns){
-				z.RegisterTestFns.Add((SvcP, _)=>subFn(SvcP, SubMgr.TestNode));
-			}
-		}
-		
-		[Doc(@$"Init {nameof(IServiceCollection)} and {nameof(IServiceProvider)}
-		you should provide the two args by yourself, then better call this at entrance
-		")]
-		public IServiceProvider InitSvc(
-			IServiceCollection SvcColct
-			,IServiceProvider SvcProvdr
-		){
-			_ = SvcColct;
-			foreach(var fn in z.RegisterTestFns){
-				fn(SvcProvdr, z.TestNode);
-			}
-			return SvcProvdr;
-		}
+	[Doc(@$"Register another {nameof(IDiEtTestMgr)} as self's subnode")]
+	public static partial void RegisterSubMgr(this IDiEtTestMgr z, IDiEtTestMgr SubMgr);
+	
+	[Doc(@$"Init {nameof(IServiceCollection)} and {nameof(IServiceProvider)}
+	you should provide the two args by yourself, then better call this at entrance
+	")]
+	public static partial IServiceProvider InitSvc(
+		this IDiEtTestMgr z
+		,IServiceCollection SvcColct
+		,IServiceProvider SvcProvdr
+	);
 
-		[Doc(@$"Init {nameof(IServiceCollection)} then build and return {nameof(IServiceProvider)}")]
-		public IServiceProvider InitSvc(
-			IServiceCollection SvcColct
-			,Func<IServiceCollection, IServiceProvider> BuildSvcProvider
-		){
-			foreach(var fn in z.DiFns){
-				fn(SvcColct);
-			}
-			IServiceProvider SvcProvdr = BuildSvcProvider(SvcColct);
-			return z.InitSvc(SvcColct, SvcProvdr);
-		}
-		
-		public ITestNode GetNodeByName(str UniqName){
-			if(!z.UniqName_TestNode.TryGetValue(UniqName, out var nodes) || nodes.Count < 1){
-				throw new KeyNotFoundException($"Test node not found by uniq name: {UniqName}");
-			}
-			return nodes[0];
-		}
-		
-		public ITestNode GetNodeByTesterType(Type TesterType){
-			if(!z.TesterType_TestNode.TryGetValue(TesterType, out var nodes) || nodes.Count < 1){
-				throw new KeyNotFoundException($"Test node not found by tester type: {TesterType}");
-			}
-			return nodes[0];
-		}
-		
-		[Obsolete(@$"Use {nameof(GetNodesByTesteeType)}")]
-		public ITestNode GetNodeByTesteeType(Type TesteeType){
-			if(!z.TesteeType_TestNode.TryGetValue(TesteeType, out var nodes) || nodes.Count < 1){
-				throw new KeyNotFoundException($"Test node not found by testee type: {TesteeType}");
-			}
-			return nodes[0];
-		}
-		
-		[Obsolete(@$"Use {nameof(GetNodesByTesteeFnName)}")]
-		public ITestNode GetNodeByTesteeFnName(str TesteeFnName){
-			if(!z.TesteeFnName_TestNode.TryGetValue(TesteeFnName, out var nodes) || nodes.Count < 1){
-				throw new KeyNotFoundException($"Test node not found by testee fn name: {TesteeFnName}");
-			}
-			return nodes[0];
-		}
-		
-		public IList<ITestNode> GetNodesByTesteeType(Type TesteeType){
-			if(!z.TesteeType_TestNode.TryGetValue(TesteeType, out var nodes) || nodes.Count < 1){
-				throw new KeyNotFoundException($"Test node not found by testee type: {TesteeType}");
-			}
-			return nodes;
-		}
-		
-		public IList<ITestNode> GetNodesByTesteeFnName(str TesteeFnName){
-			if(!z.TesteeFnName_TestNode.TryGetValue(TesteeFnName, out var nodes) || nodes.Count < 1){
-				throw new KeyNotFoundException($"Test node not found by testee fn name: {TesteeFnName}");
-			}
-			return nodes;
-		}
-	}
+	[Doc(@$"Init {nameof(IServiceCollection)} then build and return {nameof(IServiceProvider)}")]
+	public static partial IServiceProvider InitSvc(
+		this IDiEtTestMgr z
+		,IServiceCollection SvcColct
+		,Func<IServiceCollection, IServiceProvider> BuildSvcProvider
+	);
 	
-	private static void IndexTesteeForSubtree(IDiEtTestMgr z, ITestNode Root){
-		foreach(var node in WalkNodes(Root)){
-			var data = node.Data;
-			if(data is null){
-				continue;
-			}
-			if(data.TesteeTypes is not null){
-				foreach(var t in data.TesteeTypes){
-					if(t is null){
-						continue;
-					}
-					AddNodeToDict(z.TesteeType_TestNode, t, node);
-				}
-			}
-			if(data.TesteeFnNames is not null){
-				foreach(var n in data.TesteeFnNames){
-					if(string.IsNullOrWhiteSpace(n)){
-						continue;
-					}
-					AddNodeToDict(z.TesteeFnName_TestNode, n, node);
-				}
-			}
-		}
-	}
+	public static partial ITestNode GetNodeByName(this IDiEtTestMgr z, str UniqName);
 	
-	private static IEnumerable<ITestNode> WalkNodes(ITestNode Root){
-		var stack = new Stack<ITestNode>();
-		stack.Push(Root);
-		while(stack.Count > 0){
-			var cur = stack.Pop();
-			yield return cur;
-			if(cur.Children is null){
-				continue;
-			}
-			for(int i = cur.Children.Count - 1; i >= 0; i--){
-				stack.Push(cur.Children[i]);
-			}
-		}
-	}
+	public static partial ITestNode GetNodeByTesterType(this IDiEtTestMgr z, Type TesterType);
 	
-	private static void AddNodeToDict<TKey>(
+	[Obsolete(@$"Use {nameof(GetNodesByTesteeType)}")]
+	public static partial ITestNode GetNodeByTesteeType(this IDiEtTestMgr z, Type TesteeType);
+	
+	[Obsolete(@$"Use {nameof(GetNodesByTesteeFnName)}")]
+	public static partial ITestNode GetNodeByTesteeFnName(this IDiEtTestMgr z, str TesteeFnName);
+	
+	public static partial IList<ITestNode> GetNodesByTesteeType(this IDiEtTestMgr z, Type TesteeType);
+	
+	public static partial IList<ITestNode> GetNodesByTesteeFnName(this IDiEtTestMgr z, str TesteeFnName);
+
+	/// 把子樹裡帶 metadata 的用例節點按 TesteeTypes/TesteeFnNames 入索引。
+	private static partial void IndexTesteeForSubtree(IDiEtTestMgr z, ITestNode Root);
+
+	/// 迭代子樹所有節點（先序）。
+	private static partial IEnumerable<ITestNode> WalkNodes(ITestNode Root);
+
+	/// 往字典的列表值追加節點（去重）。
+	private static partial void AddNodeToDict<TKey>(
 		IDictionary<TKey, IList<ITestNode>> Dict
 		,TKey Key
 		,ITestNode Node
-	) where TKey : notnull{
-		if(!Dict.TryGetValue(Key, out var list)){
-			list = [];
-			Dict.Add(Key, list);
-		}
-		if(!list.Contains(Node)){
-			list.Add(Node);
-		}
-	}
+	) where TKey : notnull;
 }

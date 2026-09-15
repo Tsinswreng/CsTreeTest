@@ -3,10 +3,7 @@ using Tsinswreng.CsU128Id;
 
 namespace Tsinswreng.CsTreeTest;
 
-[Doc(@$"Test Only one Function per case
-
-you can also combine many functions into one function in one case
-")]
+// 用例：一個用例只測一個函數（也可以把多個函數併成一個用例測）。
 public interface ITestCase{
 	[Doc(@$"Function to test")]
 	public FnTest FnTest{get;set;}
@@ -54,6 +51,7 @@ public interface ITestCase{
 	
 }
 
+// 用例的默認實現：純數據類型，無方法體可分離（保持單文件）。UniqName 默認取 ULID。
 public class TestCase : ITestCase{
 	public FnTest FnTest{get;set;}
 	public Type? TesterType{get;set;}
@@ -73,4 +71,3 @@ public class TestCase : ITestCase{
 	}
 	
 }
-
