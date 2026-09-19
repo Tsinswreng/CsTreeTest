@@ -2,16 +2,19 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<!-- 本倉測試直接本地引用庫源碼，不經過 NuGet；驗證 AOT 產物走 Scripts/TestAot -->
+		<!-- 本倉測試直接本地引用庫源碼，不經過 NuGet。
+		     本工程是測試程序集，調用方不會引用它，
+		     所以它照真實測試工程的方式用真的微軟依賴注入。
+		     「框架不依賴 DI」由框架自己的 csproj 保證，
+		     不需要也不應該靠測試工程不用 DI 來證明。 -->
 		<ProjectReference Include="../Tsinswreng.CsTreeTest/Tsinswreng.CsTreeTest.csproj" />
-		<!-- 入口與 DiEtTestMgr 用例需要完整 DI（ServiceCollection/BuildServiceProvider）；
-		     Directory.Build.props 只提供 Abstractions 6.0.0，與完整 DI 10.0.0 衝突，
-		     故在此 Update 到 10.0.0（只影響本工程） -->
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
-		<PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
 	</ItemGroup>
 
 </Project>

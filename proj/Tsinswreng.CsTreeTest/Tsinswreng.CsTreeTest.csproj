@@ -5,10 +5,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<PackageId>Tsinswreng.CsTreeTest</PackageId>
-		<Version>0.1.1-alpha</Version>
+		<Version>0.2.0-alpha</Version>
 		<Authors>Tsinswreng</Authors>
-		<Description>Tree-structured test framework with explicit registration, dependency-injection integration, and parallel or ordered execution.</Description>
-		<PackageTags>Testing;Tree;DI;UnitTest;Framework</PackageTags>
+		<Description>Tree-structured test framework with explicit registration, index-based filtering, and parallel or ordered execution. No dependency-injection dependency.</Description>
+		<PackageTags>Testing;Tree;UnitTest;Framework</PackageTags>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -25,11 +25,6 @@
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Tsinswreng.CsU128Id" Version="0.0.1-alpha" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="..\..\README.md" Pack="true" PackagePath="\" />

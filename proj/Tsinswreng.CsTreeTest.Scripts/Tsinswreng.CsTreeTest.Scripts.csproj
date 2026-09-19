@@ -13,8 +13,8 @@
 	<ItemGroup>
 		<!-- 本倉庫不含 CsSh 源碼，固定從 NuGet 引用（與 Ngan.Dict/CsSql 的 Scripts 一致） -->
 		<PackageReference Include="Tsinswreng.CsSh" Version="0.3.0-alpha" />
-		<!-- CsSh 0.3.0-alpha 依賴完整 DI 10.0.8；props 只提供 Abstractions 6.0.0，會降級衝突，
-		     故 Update 到 10.0.8（只影響本工程） -->
+		<!-- 測試框架已不再依賴 DI；CsSh 自帶其 DI.Abstractions 傳遞依賴，
+		     此 Update 只是把版本釘在 CsSh 自己要的 10.0.8。 -->
 		<PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.8" />
 	</ItemGroup>
 

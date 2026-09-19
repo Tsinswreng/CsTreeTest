@@ -7,13 +7,14 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<ItemGroup>
+		<!-- 類型別名（str/nil/CT 等）由本檔案統一分發給本目錄下全部工程，
+		     以免各工程各寫一份。 -->
 		<Compile Include="$(MSBuildThisFileDirectory)TypeAlias.cs" />
 		<PackageReference Include="Tsinswreng.CsCore" Version="0.0.1-alpha" />
-		<!-- <ProjectReference Include="../../../Tsinswreng.CsU128Id/proj/Tsinswreng.CsU128Id/Tsinswreng.CsU128Id.csproj" /> -->
 		<PackageReference Include="Tsinswreng.CsU128Id" Version="0.0.1-alpha" />
 	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0"/>
-	</ItemGroup>
+	<!-- 注意：本目錄下不再引用任何依賴注入套件。
+	     測試框架自身不依賴依賴注入；
+	     各測試工程的入口若要用微軟的依賴注入，
+	     由該工程自己引用。 -->
 </Project>
-

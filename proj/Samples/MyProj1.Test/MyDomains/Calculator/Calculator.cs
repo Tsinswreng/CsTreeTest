@@ -1,20 +1,30 @@
 namespace MyProj1.Test.MyDomains.Calculator;
-/// example Testee class. this is a sample proj , we put it here for convenience
-/// actually testee class are not in the same csproj as test code
-public interface ICalculator {
-	int Add(int a, int b);
-	bool TryIntDivide(int a, int b, out int R);
+
+/// 被測接口。
+/// 實驗示例把被測類放在測試工程裏，
+/// 實際項目中被測類在別的 csproj。
+public interface ICalculator{
+	/// 兩數相加。
+	int Add(int A, int B);
+
+	/// 整數除法。
+	/// 除數為零時返回 false，
+	/// 不出異常。
+	bool TryIntDivide(int A, int B, out int R);
 }
-public class Calculator:ICalculator{
-	public int Add(int a, int b) {
-		return a + b;
+
+/// 被測類的默認實現。
+public class Calculator : ICalculator{
+	public int Add(int A, int B){
+		return A + B;
 	}
-	public bool TryIntDivide(int a, int b, out int R) {
-		if (b == 0) {
+
+	public bool TryIntDivide(int A, int B, out int R){
+		if(B == 0){
 			R = default;
 			return false;
 		}
-		R = a / b;
+		R = A / B;
 		return true;
 	}
 }
