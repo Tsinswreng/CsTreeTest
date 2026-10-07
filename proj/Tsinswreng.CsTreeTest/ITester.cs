@@ -2,7 +2,7 @@ using Tsinswreng.CsCore;
 
 namespace Tsinswreng.CsTreeTest;
 
-[Doc("""
+[Doc($$"""
 #Sum[測試類（tester）要實現的接口：
 把自己要跑的用例掛到給定的樹節點上。]
 
@@ -41,12 +41,12 @@ using Tsinswreng.CsTreeTest;
 
 namespace MyProj1.Test.MyDomains.Calculator;
 
-public partial class TestCalculator : ITester{
+public partial class TestCalculator : {{nameof(ITester)}}{
 	// 欄位初始化時取被測對象，不需要建構子參數。
 	private readonly ICalculator _Calculator = GetRSvc<ICalculator>();
 
-	public ITestNode RegisterTestsInto(ITestNode? Node){
-		Node ??= new TestNode();
+	public {{nameof(ITestNode)}} {{nameof(RegisterTestsInto)}}({{nameof(ITestNode)}}? Node){
+		Node ??= new {{nameof(TestNode)}}();
 		RegisterAdd(Node);
 		RegisterTryIntDivide(Node);
 		return Node;
@@ -55,7 +55,7 @@ public partial class TestCalculator : ITester{
 ```
 
 *第三步：每個被測函數一個文件。*
-`MkRegister` 一次寫好元數據（測試類、被測類型、被測函數名、用例名前綴），
+`{{nameof(ExtnITestFnRegister.MkRegister)}}` 一次寫好元數據（測試類、被測類型、被測函數名、用例名前綴），
 之後每條用例只寫名字與函數體。
 用例名在同一個測試類內要能看出所測行爲。
 
@@ -66,13 +66,13 @@ using Tsinswreng.CsTreeTest;
 namespace MyProj1.Test.MyDomains.Calculator;
 
 public partial class TestCalculator{
-	public void RegisterAdd(ITestNode Node){
-		var R = Node.MkRegister<TestCalculator>(
+	public void RegisterAdd({{nameof(ITestNode)}} Node){
+		var R = Node.{{nameof(ExtnITestFnRegister.MkRegister)}}<TestCalculator>(
 			typeof(ICalculator)        // 被測類型
 			,nameof(ICalculator.Add)   // 被測函數名，必須用 nameof
 			,"Add:"                    // 用例名前綴
 		).Register;
-		var T = Assert.IsTrue;
+		var T = {{nameof(Assert.IsTrue)}};
 
 		R("正數相加", async (o) => {
 			T(_Calculator.Add(5, 3) == 8);
@@ -84,19 +84,19 @@ public partial class TestCalculator{
 
 *第四步：在測試管理器裏聲明本測試類。*
 測試類自己不進測試樹；
-由本項目的 `TestMgr` 在 `SetupTree` 裏聲明，
-`Init()` 時才統一 `new` 出來並回調 `RegisterTestsInto`。
+由本項目的 `{{nameof(TestMgr)}}` 在 `SetupTree` 裏聲明，
+`{{nameof(TestMgr.Init)}}()` 時才統一 `new` 出來並回調 `{{nameof(ITester.RegisterTestsInto)}}`。
 
 ```cs
 // MyProj1TestMgr.cs
-public class MyProj1TestMgr : TestMgr{
+public class MyProj1TestMgr : {{nameof(TestMgr)}}{
 	public static MyProj1TestMgr Inst = new();
 
 	protected override void SetupTree(){
 		// 直接掛在根下：
-		RegisterTester<TestCalculator>();
+		{{nameof(TestMgr.RegisterTester)}}<TestCalculator>();
 		// 或歸到領域分組下（分組節點自動建）：
-		// RegisterTesterIntoBranch<TestCalculator>("Calculator");
+		// {{nameof(TestMgr.RegisterTesterIntoBranch)}}<TestCalculator>("Calculator");
 	}
 }
 ```
@@ -104,7 +104,7 @@ public class MyProj1TestMgr : TestMgr{
 *第五步：入口三步。*
 順序不能顛倒：
 依賴來源必須先就緒，
-因爲 `Init()` 會立刻實例化測試類，
+因爲 `{{nameof(TestMgr.Init)}}()` 會立刻實例化測試類，
 而測試類在欄位初始化時就取依賴。
 
 ```cs
@@ -114,7 +114,7 @@ Di.SvcProvider = new ServiceCollection()
 
 MyProj1TestMgr.Inst.Init();
 
-await new TreeTestExecutor().RunEtPrint([MyProj1TestMgr.Inst.Root]);
+await new {{nameof(TreeTestExecutor)}}().{{nameof(ExtnTreeTestExecutor.RunEtPrint)}}([MyProj1TestMgr.Inst.{{nameof(TestMgr.Root)}}]);
 ```
 
 *多個測試工程怎麼合併。*
@@ -122,17 +122,17 @@ await new TreeTestExecutor().RunEtPrint([MyProj1TestMgr.Inst.Root]);
 不必逐個註冊下層的測試類：
 
 ```cs
-public class AllTestMgr : TestMgr{
+public class AllTestMgr : {{nameof(TestMgr)}}{
 	protected override void SetupTree(){
-		RegisterSubMgr(MyProj1TestMgr.Inst);
-		RegisterSubMgr(MyProj2TestMgr.Inst);
+		{{nameof(TestMgr.RegisterSubMgr)}}(MyProj1TestMgr.Inst);
+		{{nameof(TestMgr.RegisterSubMgr)}}(MyProj2TestMgr.Inst);
 	}
 }
 ```
 ]
 """)]
 public interface ITester{
-	[Doc("""
+	[Doc($$"""
 #Sum[把自己要註冊的用例掛到 `Node` 上，再把 `Node` 返回。]
 #Descr[
 `Node` 為空時自行新建一個節點並返回，

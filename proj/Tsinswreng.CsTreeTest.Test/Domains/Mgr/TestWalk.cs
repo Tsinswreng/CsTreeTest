@@ -1,27 +1,25 @@
+using Tsinswreng.CsCore;
 using Tsinswreng.CsTreeTest;
 
 namespace Tsinswreng.CsTreeTest.Test.Domains.Mgr;
 
-/// 本檔只測 ExtnTestMgr.Walk：
-/// 先序遍歷整棵子樹，結果含自身。
+// 分片聲明文件：本片測試 ExtnTestMgr.Walk；實現見 TestWalk.Impl.cs。
+[Doc($$"""
+#Sum[本檔只測 `ExtnTestMgr.Walk`：]
+#Descr[
+先序遍歷整棵子樹，
+結果含自身。
+]
+""")]
 public partial class TestMgrCase{
-	/// 把 Walk 的用例掛到節點上。
-	public void RegisterWalk(ITestNode Node){
-		var R = Node.MkRegister<TestMgrCase>(
-			typeof(TestMgr)
-			,nameof(ExtnTestMgr.Walk)
-			,"Walk:"
-		).Register;
-		var T = Assert.IsTrue;
+	[Doc($$"""
+#Sum[把 `{{nameof(ExtnTestMgr.Walk)}}` 的用例掛到節點上。]
+#Params([[要掛用例的節點]])
+""")]
+	public partial void RegisterWalk(ITestNode Node);
 
-		R("Walk 先序遍歷含自身", async (o) => {
-			var A = new TestNode{UniqName = "A"};
-			var B = A.NewChild("B");
-			var C = A.NewChild("C");
-			B.NewChild("D");
-			var Names = A.Walk().Select(x => x.UniqName).ToList();
-			T(string.Join(",", Names) == "A,B,D,C");
-			return NIL;
-		});
-	}
+	[Doc($$"""
+#Sum[`{{nameof(ExtnTestMgr.Walk)}}` 為先序遍歷且含自身：`A,B,D,C`。]
+""")]
+	public partial Task<nil> Walk_PreOrder_IncludesSelf(obj? O);
 }

@@ -1,25 +1,26 @@
+using Tsinswreng.CsCore;
 using Tsinswreng.CsTreeTest;
 
 namespace Tsinswreng.CsTreeTest.Test.Domains.NodeTree;
 
-/// 本檔只測 ExtnITestNode.PathFromRoot：
-/// 返回從根到當前節點的名字列表。
+// 分片聲明文件：本片測試 ExtnITestNode.PathFromRoot；實現見 TestPathFromRoot.Impl.cs。
+[Doc($$"""
+#Sum[本檔只測 `ExtnITestNode.PathFromRoot`：
+返回從根到當前節點的名字列表。]
+#Descr[
+*本檔只測這一個被測函數*，
+新增別的被測函數的測試時請另開文件。
+]
+""")]
 public partial class TestNodeTree{
-	/// 把 PathFromRoot 的用例掛到節點上。
-	public void RegisterPathFromRoot(ITestNode Node){
-		var R = Node.MkRegister<TestNodeTree>(
-			typeof(ITestNode)
-			,nameof(ExtnITestNode.PathFromRoot)
-			,"Path:"
-		).Register;
-		var T = Assert.IsTrue;
+	[Doc($$"""
+#Sum[把 `{{nameof(ExtnITestNode.PathFromRoot)}}` 的用例掛到節點上。]
+#Params([[要掛用例的節點]])
+""")]
+	public partial void RegisterPathFromRoot(ITestNode Node);
 
-		R("PathFromRoot 返回名字列表", async (o) => {
-			var A = new TestNode{UniqName = "A"};
-			var B = A.NewChild("B");
-			var C = B.NewChild("C");
-			T(string.Join("/", C.PathFromRoot()) == "A/B/C");
-			return NIL;
-		});
-	}
+	[Doc($$"""
+#Sum[`{{nameof(ExtnITestNode.PathFromRoot)}}` 返回從根到本節點這一路各節點的唯一名，含兩端。]
+""")]
+	public partial Task<nil> PathFromRoot_NestedChain_RootToLeafNames(obj? O);
 }

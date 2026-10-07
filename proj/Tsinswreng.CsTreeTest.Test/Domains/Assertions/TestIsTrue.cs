@@ -1,33 +1,31 @@
+using Tsinswreng.CsCore;
 using Tsinswreng.CsTreeTest;
 
 namespace Tsinswreng.CsTreeTest.Test.Domains.Assertions;
 
-/// 測 Assert.IsTrue 的分片。
+// 分片聲明文件：本片測試 Assert.IsTrue；實現見 TestIsTrue.Impl.cs。
+[Doc($$"""
+#Sum[測 `{{nameof(Assert.IsTrue)}}` 的分片。]
+#Descr[
+*本檔只測 `{{nameof(Assert.IsTrue)}}` 這一個被測函數。*
+新增別的函數的測試時請另開文件，
+不要把不同函數的用例堆在同一檔。
+]
+""")]
 public partial class TestAssert{
-	/// 把 IsTrue 的用例掛到節點上。
-	public void RegisterIsTrue(ITestNode Node){
-		var R = Node.MkRegister<TestAssert>(
-			typeof(Assert)
-			,nameof(Assert.IsTrue)
-			,"Assert:"
-		).Register;
-		var T = Assert.IsTrue;
+	[Doc($$"""
+#Sum[把 `{{nameof(Assert.IsTrue)}}` 的用例掛到節點上。]
+#Params([[要掛用例的節點]])
+""")]
+	public partial void RegisterIsTrue(ITestNode Node);
 
-		R("成立時不拋", async (o) => {
-			T(true);
-			T(1 == 1);
-			return NIL;
-		});
+	[Doc($$"""
+#Sum[條件成立時 `{{nameof(Assert.IsTrue)}}` 什麼都不做，正常返回 `NIL`。]
+""")]
+	public partial Task<nil> IsTrue_ConditionHolds_NoThrow(obj? O);
 
-		R("不成立時拋出", async (o) => {
-			var Thrown = false;
-			try{
-				Assert.IsTrue(false, "故意的失敗");
-			}catch{
-				Thrown = true;
-			}
-			T(Thrown);
-			return NIL;
-		});
-	}
+	[Doc($$"""
+#Sum[條件不成立時 `{{nameof(Assert.IsTrue)}}` 拋異常，異常被執行器記爲該用例失敗。]
+""")]
+	public partial Task<nil> IsTrue_ConditionFails_Throws(obj? O);
 }

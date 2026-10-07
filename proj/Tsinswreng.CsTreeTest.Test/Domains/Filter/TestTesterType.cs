@@ -1,26 +1,17 @@
+using Tsinswreng.CsCore;
 using Tsinswreng.CsTreeTest;
-using Tsinswreng.CsTreeTest.Test.Domains.NodeTree;
 
 namespace Tsinswreng.CsTreeTest.Test.Domains.Filter;
 
-/// 本檔只測 TestFilter.TesterType：
-/// 按測試類類型篩選用例。
+// 分片聲明文件：本片測試 TestFilter.TesterType；實現見 TestTesterType.Impl.cs。
 public partial class TestFilterCase{
-	/// 把 TesterType 的用例掛到節點上。
-	public void RegisterTesterType(ITestNode Node){
-		var R = Node.MkRegister<TestFilterCase>(
-			typeof(TestFilter)
-			,nameof(TestFilter.TesterType)
-			,"Cond:"
-		).Register;
-		var T = Assert.IsTrue;
-		var Mgr = CsTreeTestTestMgr.Inst;
+	[Doc($$"""
+#Sum[把 TesterType 的用例掛到節點上。]
+""")]
+	public partial void RegisterTesterType(ITestNode Node);
 
-		R("按測試類篩選", async (o) => {
-			var Hits = Mgr.Filter().TesterType(typeof(TestNodeTree)).Apply();
-			T(Hits.Count > 0);
-			T(Hits.All(x => x.Data!.TesterType == typeof(TestNodeTree)));
-			return NIL;
-		});
-	}
+	[Doc($$"""
+#Sum[按測試類篩選用例：命中的用例都屬於該測試類。]
+""")]
+	public partial Task<nil> TesterType_ByTesterType_FiltersAllMatching(obj? O);
 }

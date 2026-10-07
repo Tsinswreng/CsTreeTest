@@ -3,14 +3,14 @@ using Tsinswreng.CsCore;
 namespace Tsinswreng.CsTreeTest;
 
 // 聲明文件：只寫函數聲明（partial method）與 Doc；實現見 Assert.Impl.cs。
-[Doc("""
+[Doc($$"""
 #Sum[最簡斷言入口：條件不成立就拋異常。]
 #Descr[
 *失敗的表達方式就是拋異常*：
 本庫不靠返回值表示成敗，
-用例函數正常返回即算通過，拋出任何異常即算失敗（見 `TreeTestExecutor.ExecuteItem`）。
+用例函數正常返回即算通過，拋出任何異常即算失敗（見 `{{nameof(TreeTestExecutor)}}`）。
 所以斷言失敗時拋出的異常會被執行器收進
-`TestCaseRunResult.Exception`，不會中斷其餘用例——
+`{{nameof(TestCaseRunResult.Exception)}}`，不會中斷其餘用例——
 詳細的失敗信息（異常的消息、堆棧）會被打印出來。
 
 *為甚麼這麼薄*：
@@ -21,12 +21,12 @@ namespace Tsinswreng.CsTreeTest;
 
 用途分兩種：
 + 用例函數體裏直接調用，讓用例失敗。
-+ 在 `ITester.RegisterTestsInto` *之外*的地方（比如準備數據時）調用也可，
++ 在 `{{nameof(ITester.RegisterTestsInto)}}` *之外*的地方（比如準備數據時）調用也可，
 	但那時拋出的異常不歸執行器管，會照常往外冒。
 
 *註冊用例時常寫成*
 ```cs
-var T = Assert.IsTrue;
+var T = {{nameof(Assert.IsTrue)}};
 R("正數相加", async (o) => {
 	T(_Calculator.Add(5, 3) == 8);
 	return NIL;
@@ -35,7 +35,7 @@ R("正數相加", async (o) => {
 ]
 """)]
 public partial class Assert{
-	[Doc("""
+	[Doc($$"""
 #Sum[斷言成立；不成立就拋帶 `ErrMsg` 的異常。]
 #Descr[
 *邊界條件*：

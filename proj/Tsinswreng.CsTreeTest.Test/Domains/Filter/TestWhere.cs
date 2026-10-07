@@ -1,27 +1,22 @@
+using Tsinswreng.CsCore;
 using Tsinswreng.CsTreeTest;
 
 namespace Tsinswreng.CsTreeTest.Test.Domains.Filter;
 
-/// 本檔只測 TestFilter.Where：
-/// 自訂謂詞篩選。
+// 分片聲明文件：本片測試 TestFilter.Where；實現見 TestWhere.Impl.cs。
 public partial class TestFilterCase{
-	/// 把 Where 的用例掛到節點上。
-	public void RegisterWhere(ITestNode Node){
-		var R = Node.MkRegister<TestFilterCase>(
-			typeof(TestFilter)
-			,nameof(TestFilter.Where)
-			,"Cond:"
-		).Register;
-		var T = Assert.IsTrue;
-		var Mgr = CsTreeTestTestMgr.Inst;
+	[Doc($$"""
+#Sum[把 Where 的用例掛到節點上。]
+""")]
+	public partial void RegisterWhere(ITestNode Node);
 
-		R("Where 自訂條件", async (o) => {
-			var Hits = Mgr.Filter()
-				.Where(x => x.UniqName.Contains("失敗"))
-				.Apply();
-			T(Hits.Count > 0);
-			T(Hits.All(x => x.UniqName.Contains("失敗")));
-			return NIL;
-		});
-	}
+	[Doc($$"""
+#Sum[Where 自訂條件：用自訂謂詞按用例名篩選。]
+
+#Descr[
+謂詞取 Executor 域那條用例的方法名，
+命中的用例全部滿足該謂詞。
+]
+""")]
+	public partial Task<nil> Where_CustomPredicate_CaseNameFragment_Filters(obj? O);
 }

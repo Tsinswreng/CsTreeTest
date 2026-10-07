@@ -1,38 +1,36 @@
+using Tsinswreng.CsCore;
 using Tsinswreng.CsTreeTest;
 
 namespace Tsinswreng.CsTreeTest.Test.Domains.NodeTree;
 
-/// 測建節點的各種途徑。
+// 分片聲明文件：本片測試 ExtnITestNode.NewChild / NewTesterChild；實現見 TestNewChild.Impl.cs。
+[Doc($$"""
+#Sum[測建節點的各種途徑。]
+#Descr[
+*本檔主要測 `ExtnITestNode.NewChild`*，
+並順帶測同族的 `{{nameof(ExtnITestNode.NewTesterChild)}}`（掛測試類節點的入口）。
+兩者都會維護父子兩邊的引用。
+]
+""")]
 public partial class TestNodeTree{
-	/// 把建節點的用例掛到節點上。
-	public void RegisterNewChild(ITestNode Node){
-		var R = Node.MkRegister<TestNodeTree>(
-			typeof(ITestNode)
-			,nameof(ExtnITestNode.NewChild)
-			,"NewChild:"
-		).Register;
-		var T = Assert.IsTrue;
-		var Host = new TestNode{UniqName = "Host"};
+	[Doc($$"""
+#Sum[把建節點的用例掛到節點上。]
+#Params([[要掛用例的節點]])
+""")]
+	public partial void RegisterNewChild(ITestNode Node);
 
-		R("不給名字時默認名非空", async (o) => {
-			var C = Host.NewChild();
-			T(C.UniqName.Length > 0);
-			T(Host.Children.Contains(C));
-			T(C.Parents.Contains(Host));
-			return NIL;
-		});
+	[Doc($$"""
+#Sum[不給名字時 `{{nameof(ExtnITestNode.NewChild)}}` 自動取非空默認名，並在父子兩邊都掛上引用。]
+""")]
+	public partial Task<nil> NewChild_NoName_DefaultUniqNameNonEmpty(obj? O);
 
-		R("顯式給名字", async (o) => {
-			var C = Host.NewChild("Given");
-			T(C.UniqName == "Given");
-			return NIL;
-		});
+	[Doc($$"""
+#Sum[顯式給名字時 `{{nameof(ExtnITestNode.NewChild)}}` 用給的名字作唯一名。]
+""")]
+	public partial Task<nil> NewChild_ExplicitName_UniqNameAsGiven(obj? O);
 
-		R("NewTesterChild 記下測試類並以類名為默認名", async (o) => {
-			var C = Host.NewTesterChild(typeof(TestNodeTree));
-			T(C.TesterType == typeof(TestNodeTree));
-			T(C.UniqName == nameof(TestNodeTree));
-			return NIL;
-		});
-	}
+	[Doc($$"""
+#Sum[`{{nameof(ExtnITestNode.NewTesterChild)}}` 記下測試類類型，且不給名字時節點名取測試類短名。]
+""")]
+	public partial Task<nil> NewTesterChild_ExplicitTesterType_TypeRecordedAndNameIsClassName(obj? O);
 }
