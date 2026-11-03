@@ -22,6 +22,7 @@ global using CT = System.Threading.CancellationToken;
 
 #pragma warning disable CS0436
 global using static Tsinswreng.CsTypeAlias.Nil;
+global using Tsinswreng.CsCore;
 namespace Tsinswreng.CsTypeAlias {
 	internal class Nil{
 		public const nil NIL = null!;
