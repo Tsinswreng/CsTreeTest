@@ -1,5 +1,5 @@
 using Tsinswreng.CsCore;
-using Tsinswreng.CsU128Id;
+//using Tsinswreng.CsU128Id;
 
 namespace Tsinswreng.CsTreeTest;
 
@@ -94,5 +94,6 @@ public class TestCase : ITestCase{
 
 	[Doc(@$"#Sum[唯一名，默認取 ULID。]
 #See[{nameof(ITestCase.UniqName)}]")]
-	public str UniqName{get;set;} = U128Id.NewUlid().ToLow64Base();
+	//public str UniqName{get;set;} = U128Id.NewUlid().ToLow64Base();
+	public str UniqName{get;set;} = new Guid().ToString();
 }

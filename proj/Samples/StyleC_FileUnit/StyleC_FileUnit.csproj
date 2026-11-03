@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- 樣本 C：以「檔案」為註冊單位。
+	     沒有測試類、沒有主檔；管理器直接列每個檔案自己的 Register。 -->
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>SampleCart.StyleC</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="../../Tsinswreng.CsTreeTest/Tsinswreng.CsTreeTest.csproj" />
+		<ProjectReference Include="../../StyleDrafts/Tsinswreng.CsTreeTest.StyleDrafts.csproj" />
+		<ProjectReference Include="../SampleDomain/SampleDomain.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- 評估用的草稿庫：不屬於庫本體、不打包、不入庫。
+	     它的存在只是為了讓 proj/Samples 下幾種「候選寫法」都能真的編譯、真的跑，
+	     好讓人從調用方代碼入手比較，而不是從方案文字猜。 -->
+	<PropertyGroup>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="../Tsinswreng.CsTreeTest/Tsinswreng.CsTreeTest.csproj" />
+		<!-- 只有「舊版 0.1.1 仿真殼」用到：舊版的測試類由容器解析、依賴走建構子注入，
+		     所以要摸得到 IServiceCollection 與 GetRequiredService。
+		     庫本體仍然對依賴注入零概念。 -->
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
+	</ItemGroup>
+
+</Project>

@@ -1,5 +1,5 @@
 using Tsinswreng.CsCore;
-using Tsinswreng.CsU128Id;
+//using Tsinswreng.CsU128Id;
 
 namespace Tsinswreng.CsTreeTest;
 
@@ -7,7 +7,7 @@ namespace Tsinswreng.CsTreeTest;
 public static partial class ExtnITestNode{
 	public static partial ITestNode NewChild(this ITestNode z, str? UniqName){
 		var R = new TestNode{
-			UniqName = UniqName ?? U128Id.NewUlid().ToLow64Base(),
+			UniqName = UniqName ?? new Guid().ToString(),//U128Id.NewUlid().ToLow64Base(),
 		};
 		z.Children.Add(R);
 		R.Parents.Add(z);

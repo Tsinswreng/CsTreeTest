@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- 樣本 1：庫本體現在的寫法（本地 0.2.0-alpha）。
+	     TestMgr + SetupTree + Init()；測試類取依賴在欄位初始化；
+	     用例註冊用 MkRegister 並帶前綴。 -->
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>SampleCart.Style1</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="../../Tsinswreng.CsTreeTest/Tsinswreng.CsTreeTest.csproj" />
+		<ProjectReference Include="../SampleDomain/SampleDomain.csproj" />
+	</ItemGroup>
+
+</Project>

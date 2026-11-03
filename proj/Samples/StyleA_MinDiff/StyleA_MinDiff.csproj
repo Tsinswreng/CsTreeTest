@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- 樣本 A：最小改動。
+	     測試類仍是實例、用例註冊寫法一字不改；
+	     只去掉 Init() 這一步，並把依賴改成用例執行時取。 -->
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>SampleCart.StyleA</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="../../Tsinswreng.CsTreeTest/Tsinswreng.CsTreeTest.csproj" />
+		<ProjectReference Include="../../StyleDrafts/Tsinswreng.CsTreeTest.StyleDrafts.csproj" />
+		<ProjectReference Include="../SampleDomain/SampleDomain.csproj" />
+	</ItemGroup>
+
+</Project>

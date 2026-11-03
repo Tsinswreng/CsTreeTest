@@ -11,7 +11,7 @@
 		     以免各工程各寫一份。 -->
 		<Compile Include="$(MSBuildThisFileDirectory)TypeAlias.cs" />
 		<PackageReference Include="Tsinswreng.CsCore" Version="0.0.1-alpha" />
-		<PackageReference Include="Tsinswreng.CsU128Id" Version="0.0.1-alpha" />
+		<!-- <PackageReference Include="Tsinswreng.CsU128Id" Version="0.0.1-alpha" /> -->
 	</ItemGroup>
 	<!-- 注意：本目錄下不再引用任何依賴注入套件。
 	     測試框架自身不依賴依賴注入；

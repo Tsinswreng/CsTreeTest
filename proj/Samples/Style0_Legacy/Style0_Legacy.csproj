@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- 樣本 0：「升級前」的寫法。
+	     照 NuGet 0.1.1-alpha 的 API 寫：DiEtTestMgr + InitSvc + 建構子注入 + MkTestFnRegister。
+	     它跑在 StyleDrafts 的舊版仿真殼上，所以能真編譯、真跑。 -->
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>SampleCart.Style0</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="../../Tsinswreng.CsTreeTest/Tsinswreng.CsTreeTest.csproj" />
+		<ProjectReference Include="../../StyleDrafts/Tsinswreng.CsTreeTest.StyleDrafts.csproj" />
+		<ProjectReference Include="../SampleDomain/SampleDomain.csproj" />
+	</ItemGroup>
+
+</Project>

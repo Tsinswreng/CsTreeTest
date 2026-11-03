@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- 樣本 B：靜態測試類 + 分組節點帶元數據 + 具名用例函數。
+	     管理器不 new 任何東西；用例不再寫 lambda、不再寫前綴。 -->
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>SampleCart.StyleB</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="../../Tsinswreng.CsTreeTest/Tsinswreng.CsTreeTest.csproj" />
+		<ProjectReference Include="../../StyleDrafts/Tsinswreng.CsTreeTest.StyleDrafts.csproj" />
+		<ProjectReference Include="../SampleDomain/SampleDomain.csproj" />
+	</ItemGroup>
+
+</Project>
