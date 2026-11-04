@@ -4,14 +4,15 @@ namespace Tsinswreng.CsTreeTest;
 
 // 單檔：ITestCase 接口；純聲明，無函數可分離。
 [Doc($$"""
-#Sum[單條用例。除了要跑的函數，還帶着它的元數據。]
+單條用例。除了要跑的函數，還帶着它的元數據。
+
 #Descr[
 元數據是查詢與篩選的唯一依據：
 按測試類找、按被測類型找、按被測函數名找，
 都只看這裏的字段。
 
 元數據不是手寫的——
-由 `{{nameof(ExtnITestFnRegister.MkRegister)}}` 在造註冊器時統一寫一遍，
+由 `{{nameof(ITestFnRegisterExtn.MkRegister)}}` 在造註冊器時統一寫一遍，
 之後每條用例只寫名字與函數體（見 `{{nameof(ITester)}}` 的示例）。
 ]
 """)]
@@ -29,7 +30,7 @@ public interface ITestCase{
 	[Doc($$"""
 #Sum[本用例屬於哪個測試類。]
 #Descr[
-由 `{{nameof(ExtnITestFnRegister.MkRegister)}}<TTester>` 的泛型參數決定，
+由 `{{nameof(ITestFnRegisterExtn.MkRegister)}}<TTester>` 的泛型參數決定，
 一個用例只屬於一個測試類。
 ]
 """)]

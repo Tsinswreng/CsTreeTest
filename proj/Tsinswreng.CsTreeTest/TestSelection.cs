@@ -114,7 +114,7 @@ public partial class TestSelection{
 	[Doc($$"""
 #Sum[執行選中的用例，返回匯總但不打印。]
 #Descr[
-與 `{{nameof(ExtnTreeTestExecutor.RunEtPrint)}}` 的差別只有*打印*：
+與 `{{nameof(TreeTestExecutorExtn.RunEtPrint)}}` 的差別只有*打印*：
 本方法把匯總交回調用方，
 適合要自己出報告、或要把多次執行的結果併起來的場合。
 

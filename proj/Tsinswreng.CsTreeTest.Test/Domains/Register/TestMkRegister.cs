@@ -5,7 +5,7 @@ namespace Tsinswreng.CsTreeTest.Test.Domains.Register;
 
 // 分片聲明文件：本片測試 ExtnITestFnRegister.MkRegister 的元數據流轉；實現見 TestMkRegister.Impl.cs。
 [Doc($$"""
-#Sum[測 `{{nameof(ExtnITestFnRegister.MkRegister)}}` 的元數據如何流進用例。]
+#Sum[測 `{{nameof(ITestFnRegisterExtn.MkRegister)}}` 的元數據如何流進用例。]
 #Descr[
 *本檔主要測 `ExtnITestFnRegister.MkRegister`。*
 註冊時給的測試類類型、被測類型、被測函數名、用例名前綴

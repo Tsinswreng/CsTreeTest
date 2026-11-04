@@ -10,7 +10,7 @@ namespace Tsinswreng.CsTreeTest;
 常用的在最前面。
 ]
 """)]
-public static partial class ExtnITestFnRegister{
+public static partial class ITestFnRegisterExtn{
 	[Doc($$"""
 #Sum[建一個註冊器，測試類類型取泛型參數。]
 #Descr[
@@ -20,7 +20,7 @@ public static partial class ExtnITestFnRegister{
 
 例：
 ```cs
-var R = Node.{{nameof(ExtnITestFnRegister.MkRegister)}}<TestCalculator>(
+var R = Node.{{nameof(ITestFnRegisterExtn.MkRegister)}}<TestCalculator>(
 	typeof(ICalculator),
 	nameof(ICalculator.Add),
 	"Add:"
@@ -28,8 +28,8 @@ var R = Node.{{nameof(ExtnITestFnRegister.MkRegister)}}<TestCalculator>(
 ```
 
 *不給元數據時一個參數都不要傳*：
-寫 `{{nameof(ExtnITestFnRegister.MkRegister)}}<TestX>()`，
-不要寫 `{{nameof(ExtnITestFnRegister.MkRegister)}}<TestX>(null, null)`——
+寫 `{{nameof(ITestFnRegisterExtn.MkRegister)}}<TestX>()`，
+不要寫 `{{nameof(ITestFnRegisterExtn.MkRegister)}}<TestX>(null, null)`——
 後者與另一個重載歧義，
 編譯不過（`CS0121`）。
 ]

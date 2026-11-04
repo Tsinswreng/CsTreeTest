@@ -7,7 +7,7 @@ public partial class TestNodeTree{
 	public partial void RegisterPathString(ITestNode Node){
 		var R = Node.MkRegister<TestNodeTree>(
 			typeof(ITestNode)
-			,nameof(ExtnITestNode.PathString)
+			,nameof(ITestNodeExtn.PathString)
 			,"Path:"
 		).Register;
 

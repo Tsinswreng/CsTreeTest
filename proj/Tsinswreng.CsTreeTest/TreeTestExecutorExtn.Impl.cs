@@ -3,7 +3,7 @@ using Tsinswreng.CsCore;
 namespace Tsinswreng.CsTreeTest;
 
 // 實現文件：只放函數實現。
-public static partial class ExtnTreeTestExecutor{
+public static partial class TreeTestExecutorExtn{
 	public static partial Task<TestRunSummary> RunTests(
 		this ITestExecutor z
 		,ITestNode Root

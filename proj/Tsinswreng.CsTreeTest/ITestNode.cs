@@ -36,7 +36,7 @@ public interface ITestNode{
 
 有UUID默認值
 所以節點默認就能掛上去；
-需要按名查找（`{{nameof(ExtnTestMgr.GetNodeByName)}}`）、
+需要按名查找（`{{nameof(TestMgrExtn.GetNodeByName)}}`）、
 或希望失敗輸出的路徑可讀時，
 應顯式指定可讀的名字。
 ]
@@ -55,7 +55,7 @@ public interface ITestNode{
 	[Doc($$"""
 #Sum[子節點，順序即聲明順序。]
 #Descr[
-用 `{{nameof(ExtnITestNode.NewChild)}}` 掛子節點時會自動維護父子兩邊的引用，
+用 `{{nameof(ITestNodeExtn.NewChild)}}` 掛子節點時會自動維護父子兩邊的引用，
 不要手工往這個列表裏加。
 ]
 """)]
@@ -66,7 +66,7 @@ public interface ITestNode{
 #Descr[
 正常用法下一個節點只有一個父節點；
 聲明為列表是為了保留圖結構的可能。
-向前追溯到根的 `{{nameof(ExtnITestNode.PathFromRoot)}}` 只會取第一個父節點。
+向前追溯到根的 `{{nameof(ITestNodeExtn.PathFromRoot)}}` 只會取第一個父節點。
 ]
 """)]
 	IList<ITestNode> Parents{get;set;}

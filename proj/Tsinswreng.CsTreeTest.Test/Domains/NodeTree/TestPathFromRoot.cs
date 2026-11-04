@@ -14,13 +14,13 @@ namespace Tsinswreng.CsTreeTest.Test.Domains.NodeTree;
 """)]
 public partial class TestNodeTree{
 	[Doc($$"""
-#Sum[把 `{{nameof(ExtnITestNode.PathFromRoot)}}` 的用例掛到節點上。]
+#Sum[把 `{{nameof(ITestNodeExtn.PathFromRoot)}}` 的用例掛到節點上。]
 #Params([[要掛用例的節點]])
 """)]
 	public partial void RegisterPathFromRoot(ITestNode Node);
 
 	[Doc($$"""
-#Sum[`{{nameof(ExtnITestNode.PathFromRoot)}}` 返回從根到本節點這一路各節點的唯一名，含兩端。]
+#Sum[`{{nameof(ITestNodeExtn.PathFromRoot)}}` 返回從根到本節點這一路各節點的唯一名，含兩端。]
 """)]
 	public partial Task<nil> PathFromRoot_NestedChain_RootToLeafNames(obj? O);
 }

@@ -7,7 +7,7 @@ namespace Tsinswreng.CsTreeTest;
 #Sum[執行器的便捷入口。]
 #Descr[
 四個重載按兩件事組合：
-*跑單個節點還是節點列表*（`{{nameof(ExtnTreeTestExecutor.RunTests)}}` 與 `{{nameof(ExtnTreeTestExecutor.RunEtPrint)}}` 各有兩種），
+*跑單個節點還是節點列表*（`{{nameof(TreeTestExecutorExtn.RunTests)}}` 與 `{{nameof(TreeTestExecutorExtn.RunEtPrint)}}` 各有兩種），
 以及*要不要跑完打印*。
 
 共同約定：
@@ -18,7 +18,7 @@ namespace Tsinswreng.CsTreeTest;
 + 單節點版的重載只是把節點包成單元素列表後轉發給列表版。
 ]
 """)]
-public static partial class ExtnTreeTestExecutor{
+public static partial class TreeTestExecutorExtn{
 	[Doc($$"""
 #Sum[跑一棵子樹：不打印、不拋例外，結果由調用方自己處理。]
 #Descr[

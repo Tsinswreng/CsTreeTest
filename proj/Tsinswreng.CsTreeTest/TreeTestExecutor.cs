@@ -53,7 +53,7 @@ public sealed partial class TreeTestExecutor : ITestExecutor{
 跑階段因此不用再碰樹——
 既避免並行時讀樹造成競爭，也省掉重複上溯。
 
-`{{nameof(TestCaseRunResult.NodePath)}}` 只在收集時算一次（`{{nameof(ExtnITestNode.PathString)}}` 要沿父節點上溯）；
+`{{nameof(TestCaseRunResult.NodePath)}}` 只在收集時算一次（`{{nameof(ITestNodeExtn.PathString)}}` 要沿父節點上溯）；
 `{{nameof(ShouldNotParallelize)}}` 存的是*把繼承算完之後的結果*，
 而不是本節點自己的 `{{nameof(ITestNode.IsParallelRecursive)}}`。
 ]
@@ -62,7 +62,7 @@ public sealed partial class TreeTestExecutor : ITestExecutor{
 		[Doc(@$"#Sum[先序序號，由收集階段共享的遞增計數器分配。]")]
 		public required int Order{get;set;}
 
-		[Doc(@$"#Sum[名字路徑，收集時由 `{nameof(ExtnITestNode.PathString)}` 算好，跑階段直接用。]")]
+		[Doc(@$"#Sum[名字路徑，收集時由 `{nameof(ITestNodeExtn.PathString)}` 算好，跑階段直接用。]")]
 		public required str NodePath{get;set;}
 
 		[Doc(@$"#Sum[用例所在的樹節點。]")]

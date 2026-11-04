@@ -7,7 +7,7 @@ namespace Tsinswreng.CsTreeTest;
 #Sum[測試執行器：跑一組節點，返回匯總。]
 #Descr[
 正常用法不必直接調 `Run`：
-用 `{{nameof(ExtnTreeTestExecutor)}}` 的 `{{nameof(ExtnTreeTestExecutor.RunTests)}}` / `{{nameof(ExtnTreeTestExecutor.RunEtPrint)}}` 更方便
+用 `{{nameof(TreeTestExecutorExtn)}}` 的 `{{nameof(TreeTestExecutorExtn.RunTests)}}` / `{{nameof(TreeTestExecutorExtn.RunEtPrint)}}` 更方便
 （可傳單個節點、會補默認選項、還能順帶打印）。
 ]
 """)]

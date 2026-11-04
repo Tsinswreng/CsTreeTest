@@ -49,7 +49,7 @@ public abstract partial class TestMgr : ITestMgr{
 ]
 #Params([[測試類類型；寫進測試類節點與索引靠它],
 	[實例化動作；`{{nameof(TestMgr.Init)}}` 時才調用],
-	[測試類節點的節點名；為空時由 `{{nameof(ExtnITestNode.NewTesterChild)}}` 取測試類短名],
+	[測試類節點的節點名；為空時由 `{{nameof(ITestNodeExtn.NewTesterChild)}}` 取測試類短名],
 	[領域分組名；為空表示直接掛在根下]])
 """)]
 	private sealed record PendingTester(

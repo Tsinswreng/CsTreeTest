@@ -13,13 +13,13 @@ namespace Tsinswreng.CsTreeTest.Test.Domains.Mgr;
 """)]
 public partial class TestMgrCase{
 	[Doc($$"""
-#Sum[把 `{{nameof(ExtnTestMgr.Walk)}}` 的用例掛到節點上。]
+#Sum[把 `{{nameof(TestMgrExtn.Walk)}}` 的用例掛到節點上。]
 #Params([[要掛用例的節點]])
 """)]
 	public partial void RegisterWalk(ITestNode Node);
 
 	[Doc($$"""
-#Sum[`{{nameof(ExtnTestMgr.Walk)}}` 為先序遍歷且含自身：`A,B,D,C`。]
+#Sum[`{{nameof(TestMgrExtn.Walk)}}` 為先序遍歷且含自身：`A,B,D,C`。]
 """)]
 	public partial Task<nil> Walk_PreOrder_IncludesSelf(obj? O);
 }

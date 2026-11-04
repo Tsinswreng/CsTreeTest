@@ -7,7 +7,7 @@ public partial class TestNodeTree{
 	public partial void RegisterNewChild(ITestNode Node){
 		var R = Node.MkRegister<TestNodeTree>(
 			typeof(ITestNode)
-			,nameof(ExtnITestNode.NewChild)
+			,nameof(ITestNodeExtn.NewChild)
 			,"NewChild:"
 		).Register;
 

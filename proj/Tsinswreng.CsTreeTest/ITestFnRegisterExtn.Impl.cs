@@ -3,7 +3,7 @@ using Tsinswreng.CsCore;
 namespace Tsinswreng.CsTreeTest;
 
 // 實現文件：只放函數實現。
-public static partial class ExtnITestFnRegister{
+public static partial class ITestFnRegisterExtn{
 	public static partial ITestFnRegister MkRegister<TTester>(
 		this ITestNode z
 		,IList<Type>? TesteeTypes

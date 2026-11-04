@@ -7,7 +7,7 @@ namespace Tsinswreng.CsTreeTest;
 #Sum[註冊器的默認實現。]
 #Descr[
 一般不用直接 new；
-用 `{{nameof(ExtnITestFnRegister.MkRegister)}}` 擴展方法造。
+用 `{{nameof(ITestFnRegisterExtn.MkRegister)}}` 擴展方法造。
 ]
 """)]
 public partial class TestFnRegister : ITestFnRegister{

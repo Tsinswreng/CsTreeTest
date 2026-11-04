@@ -13,7 +13,7 @@ namespace Tsinswreng.CsTreeTest.Test.Domains.Mgr;
 """)]
 public partial class TestMgrCase{
 	[Doc($$"""
-#Sum[把 `{{nameof(ExtnTestMgr.GetNodeByName)}}` 的用例掛到節點上。]
+#Sum[把 `{{nameof(TestMgrExtn.GetNodeByName)}}` 的用例掛到節點上。]
 #Params([[要掛用例的節點]])
 """)]
 	public partial void RegisterGetNodeByName(ITestNode Node);

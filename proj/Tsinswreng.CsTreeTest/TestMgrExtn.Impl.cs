@@ -3,7 +3,7 @@ using Tsinswreng.CsCore;
 namespace Tsinswreng.CsTreeTest;
 
 // 實現文件：只放函數實現。
-public static partial class ExtnTestMgr{
+public static partial class TestMgrExtn{
 	public static partial IEnumerable<ITestNode> Walk(this ITestNode z){
 		yield return z;
 		foreach(var Child in z.Children){

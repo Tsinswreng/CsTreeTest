@@ -139,7 +139,7 @@ public partial class TestIndex{
 #Descr[
 取不到返回空，
 由調用方決定是拋例外還是當作沒有——
-`{{nameof(ExtnTestMgr.GetNodeByName)}}` 選的是拋例外。
+`{{nameof(TestMgrExtn.GetNodeByName)}}` 選的是拋例外。
 ]
 #Params([[節點唯一名]])
 #Rtn[節點；查不到時為空]

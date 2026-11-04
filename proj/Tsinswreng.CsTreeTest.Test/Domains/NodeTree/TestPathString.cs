@@ -14,13 +14,13 @@ namespace Tsinswreng.CsTreeTest.Test.Domains.NodeTree;
 """)]
 public partial class TestNodeTree{
 	[Doc($$"""
-#Sum[把 `{{nameof(ExtnITestNode.PathString)}}` 的用例掛到節點上。]
+#Sum[把 `{{nameof(ITestNodeExtn.PathString)}}` 的用例掛到節點上。]
 #Params([[要掛用例的節點]])
 """)]
 	public partial void RegisterPathString(ITestNode Node);
 
 	[Doc($$"""
-#Sum[`{{nameof(ExtnITestNode.PathString)}}` 把根到葉這一路的名字以 `/` 相連。]
+#Sum[`{{nameof(ITestNodeExtn.PathString)}}` 把根到葉這一路的名字以 `/` 相連。]
 """)]
 	public partial Task<nil> PathString_NestedChain_RootToLeafSlashJoined(obj? O);
 }

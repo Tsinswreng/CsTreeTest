@@ -16,7 +16,7 @@ namespace Tsinswreng.CsTreeTest;
 不要多次消費同一個返回值。
 ]
 """)]
-public static partial class ExtnTestMgr{
+public static partial class TestMgrExtn{
 	[Doc($$"""
 #Sum[先序遍歷本節點及其全部遞迴子節點。]
 #Descr[
@@ -26,7 +26,7 @@ public static partial class ExtnTestMgr{
 
 *不防環*：
 如果手工把節點接成環，本方法會無限遞迴；
-按正常用法（`{{nameof(ExtnITestNode.NewChild)}}`、`{{nameof(ExtnITestNode.NewTesterChild)}}`）接出來的樹不會成環。
+按正常用法（`{{nameof(ITestNodeExtn.NewChild)}}`、`{{nameof(ITestNodeExtn.NewTesterChild)}}`）接出來的樹不會成環。
 ]
 #Params([[遍歷起點，即 `this`]])
 #Rtn[先序序列，含起點自身]

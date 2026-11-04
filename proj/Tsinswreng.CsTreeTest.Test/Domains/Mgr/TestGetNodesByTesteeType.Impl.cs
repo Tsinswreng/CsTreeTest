@@ -7,7 +7,7 @@ public partial class TestMgrCase{
 	public partial void RegisterGetNodesByTesteeType(ITestNode Node){
 		var R = Node.MkRegister<TestMgrCase>(
 			typeof(TestMgr)
-			,nameof(ExtnTestMgr.GetNodesByTesteeType)
+			,nameof(TestMgrExtn.GetNodesByTesteeType)
 			,"Query:"
 		).Register;
 

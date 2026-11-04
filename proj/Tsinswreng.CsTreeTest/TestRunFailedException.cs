@@ -7,8 +7,8 @@ namespace Tsinswreng.CsTreeTest;
 #Sum[有失敗時拋出的例外，異常消息即匯總。]
 #Descr[
 *不是框架主動拋的*：
-`Run` 與 `{{nameof(ExtnTreeTestExecutor.RunTests)}}` 從不因為用例失敗而拋；
-只有 `{{nameof(ExtnTreeTestExecutor.RunEtPrint)}}` 的 `ThrowOnFailed` 為真、且 `Summary.Failed > 0` 時才拋本例外。
+`Run` 與 `{{nameof(TreeTestExecutorExtn.RunTests)}}` 從不因為用例失敗而拋；
+只有 `{{nameof(TreeTestExecutorExtn.RunEtPrint)}}` 的 `ThrowOnFailed` 為真、且 `Summary.Failed > 0` 時才拋本例外。
 
 本例外不帶任何「哪條用例失敗」的信息，
 逐條失敗原因在 `Summary.Results` 裏各條的 `Exception`——

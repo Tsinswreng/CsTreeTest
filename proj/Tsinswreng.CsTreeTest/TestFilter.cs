@@ -117,7 +117,7 @@ public partial class TestFilter{
 #Sum[造一個篩選器。]
 #Descr[
 一般不直接 new，
-用 `{{nameof(ITestMgr)}}` 上的 `{{nameof(ExtnTestMgr.Filter)}}` 擴展方法造。
+用 `{{nameof(ITestMgr)}}` 上的 `{{nameof(TestMgrExtn.Filter)}}` 擴展方法造。
 ]
 #Params([[篩選所依據的測試管理器，不能為空],
 	[篩選範圍的根；為空時取整個測試樹的根]])
@@ -293,7 +293,7 @@ Mgr.Filter()
 分支按「能用上索引的條件」區分：
 
 + 有測試類條件時：
-	以該測試類的子樹為底（`{{nameof(ExtnTestMgr.WalkCases)}}`），
+	以該測試類的子樹為底（`{{nameof(TestMgrExtn.WalkCases)}}`），
 	若還有被測函數名或被測類型，
 	就與索引裏那一組求交集。
 + 沒有測試類、但有被測函數名或被測類型時：

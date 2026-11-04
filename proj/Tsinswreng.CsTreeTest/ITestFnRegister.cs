@@ -12,11 +12,11 @@ namespace Tsinswreng.CsTreeTest;
 之後每條用例只寫用例名與用例體。
 
 正常用法不必直接碰本接口：
-用擴展方法 `{{nameof(ExtnITestFnRegister.MkRegister)}}` 造出來，
+用擴展方法 `{{nameof(ITestFnRegisterExtn.MkRegister)}}` 造出來，
 直接取它的 `{{nameof(ITestFnRegister.Register)}}` 方法組來連註冊多條用例：
 
 ```cs
-var R = Node.{{nameof(ExtnITestFnRegister.MkRegister)}}<TestCalculator>(
+var R = Node.{{nameof(ITestFnRegisterExtn.MkRegister)}}<TestCalculator>(
 	typeof(ICalculator),
 	nameof(ICalculator.Add),
 	"Add:"
@@ -46,7 +46,7 @@ public interface ITestFnRegister{
 後面的用例就會用新值。
 
 調用方式見接口註釋：
-先 `var R = Node.{{nameof(ExtnITestFnRegister.MkRegister)}}<...>(...).{{nameof(ITestFnRegister.Register)}};`
+先 `var R = Node.{{nameof(ITestFnRegisterExtn.MkRegister)}}<...>(...).{{nameof(ITestFnRegister.Register)}};`
 再 `R("用例名", 用例體)`。
 ]
 #Params([[用例名，不含前綴；應能看出所測行爲，禁止 `Test1`、`Try`、`Temp` 這類名字],
@@ -57,7 +57,7 @@ public interface ITestFnRegister{
 	[Doc($$"""
 #Sum[本節點下的用例屬於哪個測試類。]
 #Descr[
-由 `{{nameof(ExtnITestFnRegister.MkRegister)}}<TTester>` 的泛型參數寫入。
+由 `{{nameof(ITestFnRegisterExtn.MkRegister)}}<TTester>` 的泛型參數寫入。
 ]
 """)]
 	Type TesterType{get;set;}

@@ -6,7 +6,7 @@ namespace Tsinswreng.CsTreeTest;
 [Doc($$"""
 #Sum[測試樹節點的擴展方法。]
 """)]
-public static partial class ExtnITestNode{
+public static partial class ITestNodeExtn{
 	[Doc($$"""
 #Sum[往本節點下掛一個普通子節點，並維護父子兩邊的引用。]
 #Descr[

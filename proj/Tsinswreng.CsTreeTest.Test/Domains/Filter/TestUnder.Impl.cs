@@ -8,7 +8,7 @@ public partial class TestFilterCase{
 	public partial void RegisterUnder(ITestNode Node){
 		var R = Node.MkRegister<TestFilterCase>(
 			typeof(TestFilter)
-			,nameof(ExtnTestMgr.Filter)
+			,nameof(TestMgrExtn.Filter)
 			,"Cond:"
 		).Register;
 

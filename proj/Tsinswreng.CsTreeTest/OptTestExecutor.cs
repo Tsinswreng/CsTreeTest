@@ -59,7 +59,7 @@ public class OptTestExecutor{
 用例不需要時忽略即可。
 
 注意優先級：
-擴展方法 `{{nameof(ExtnTreeTestExecutor.RunTests)}}` / `{{nameof(ExtnTreeTestExecutor.RunEtPrint)}}` 的 `Arg` 參數只在*本字段為空*時才寫進來
+擴展方法 `{{nameof(TreeTestExecutorExtn.RunTests)}}` / `{{nameof(TreeTestExecutorExtn.RunEtPrint)}}` 的 `Arg` 參數只在*本字段為空*時才寫進來
 （`Opt.Arg ??= Arg`），
 即本字段優先。
 ]

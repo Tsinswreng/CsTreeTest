@@ -18,7 +18,7 @@ namespace Tsinswreng.CsTreeTest.Test;
 框架不引用依賴注入，但測試工程自己引用；
 這樣才能真真切切走一遍「測試類向全局依賴來源取被測對象」的路。
 
-`{{nameof(ExtnTreeTestExecutor.RunEtPrint)}}` 默認不拋異常，
+`{{nameof(TreeTestExecutorExtn.RunEtPrint)}}` 默認不拋異常，
 所以「失敗即非零退出碼」是入口的義務：
 本入口用返回值實現（等價於 `if(S.Failed > 0){ Environment.Exit(1); }`）。
 ]

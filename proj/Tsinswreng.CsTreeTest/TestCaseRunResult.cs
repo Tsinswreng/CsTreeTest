@@ -32,7 +32,7 @@ public sealed class TestCaseRunResult{
 #Descr[
 由各祖先節點（含本節點）的唯一名以 `/` 拼成，例如
 `Tests/Calculator/TestCalculator/Add:正數相加`。
-在收集階段由 `{{nameof(ExtnITestNode.PathString)}}` 沿父節點上溯算好。
+在收集階段由 `{{nameof(ITestNodeExtn.PathString)}}` 沿父節點上溯算好。
 
 *為甚麼用名字路徑*：失敗輸出要給人看，
 名字路徑一眼就能看出是哪個測試類的哪條用例，
@@ -76,7 +76,7 @@ public sealed class TestCaseRunResult{
 
 是否要有失敗就讓進程失敗，
 由入口按 `{{nameof(TestRunSummary.Failed)}}` 自行判斷；
-本庫自己不做這個決定（見 `{{nameof(ExtnTreeTestExecutor.RunEtPrint)}}` 的 `ThrowOnFailed`）。
+本庫自己不做這個決定（見 `{{nameof(TreeTestExecutorExtn.RunEtPrint)}}` 的 `ThrowOnFailed`）。
 ]
 """)]
 	public Exception? Exception{get;set;}

@@ -7,7 +7,7 @@ public partial class TestMgrCase{
 	public partial void RegisterWalk(ITestNode Node){
 		var R = Node.MkRegister<TestMgrCase>(
 			typeof(TestMgr)
-			,nameof(ExtnTestMgr.Walk)
+			,nameof(TestMgrExtn.Walk)
 			,"Walk:"
 		).Register;
 
