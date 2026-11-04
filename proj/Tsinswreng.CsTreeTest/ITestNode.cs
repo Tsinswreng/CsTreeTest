@@ -34,7 +34,7 @@ public interface ITestNode{
 同一棵測試樹內不得重複，
 重複時建立索引會直接拋異常。
 
-默認取 ULID，
+有UUID默認值
 所以節點默認就能掛上去；
 需要按名查找（`{{nameof(ExtnTestMgr.GetNodeByName)}}`）、
 或希望失敗輸出的路徑可讀時，
