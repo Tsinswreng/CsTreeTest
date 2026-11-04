@@ -2,42 +2,19 @@ using Tsinswreng.CsCore;
 
 namespace Tsinswreng.CsTreeTest;
 
-// 聲明文件：ExtnITestFnRegister 擴展方法的宣告；實現見 ExtnITestFnRegister.Impl.cs。
+// 聲明文件：ITestFnRegisterExtn 擴展方法的宣告；實現見 ITestFnRegisterExtn.Impl.cs。
 [Doc($$"""
-#Sum[建註冊器的擴展方法。]
-#Descr[
-三個重載按「知道多少元數據」區分，
-常用的在最前面。
-]
+建註冊器的擴展方法；三個重載按「知道多少元數據」區分。
 """)]
 public static partial class ITestFnRegisterExtn{
 	[Doc($$"""
-#Sum[建一個註冊器，測試類類型取泛型參數。]
-#Descr[
-*一個文件只測一個被測函數*時用這個重載最省事：
-被測類型與被測函數名各給一個，
-不必寫列表初始化器。
+測試類類型取泛型參數；一個文件只測一個被測函數時最省事。
 
-例：
-```cs
-var R = Node.{{nameof(ITestFnRegisterExtn.MkRegister)}}<TestCalculator>(
-	typeof(ICalculator),
-	nameof(ICalculator.Add),
-	"Add:"
-).{{nameof(ITestFnRegister.Register)}};
-```
+不給元數據時一個參數都別傳：寫 `{{nameof(MkRegister)}}<TestX>()`；
+寫 `(null, null)` 會與下一個重載歧義（CS0121）。
 
-*不給元數據時一個參數都不要傳*：
-寫 `{{nameof(ITestFnRegisterExtn.MkRegister)}}<TestX>()`，
-不要寫 `{{nameof(ITestFnRegisterExtn.MkRegister)}}<TestX>(null, null)`——
-後者與另一個重載歧義，
-編譯不過（`CS0121`）。
-]
-#TParams([測試類類型，須實作 `{{nameof(ITester)}}`])
-#Params([[要掛用例的節點],
-	[被測類型；雖是列表，但這個重載一般只傳一個],
-	[被測函數名；一般只傳一個],
-	[用例名前綴，默認不加]])
+#TPrm[{{nameof(TTester)}}][測試類類型，須實作 `{{nameof(ITester)}}`]
+#Prm[{{nameof(UniqNamePrefix)}}][用例名前綴，默認不加]
 #Rtn[註冊器；取它的 `{{nameof(ITestFnRegister.Register)}}` 方法組即可註冊用例]
 """)]
 	public static partial ITestFnRegister MkRegister<TTester>(
@@ -48,16 +25,9 @@ var R = Node.{{nameof(ITestFnRegisterExtn.MkRegister)}}<TestCalculator>(
 	);
 
 	[Doc($$"""
-#Sum[建一個註冊器，測試類類型也由調用方顯式給。]
-#Descr[
-只在無法用泛型參數給出測試類時使用
-（例如測試類類型是運行時算出來的）。
-]
-#Params([[要掛用例的節點],
-	[測試類類型],
-	[被測類型列表],
-	[被測函數名列表],
-	[用例名前綴]])
+測試類類型也由調用方給，用於運行時才知道測試類的場合。
+
+#Prm[{{nameof(TesterType)}}][測試類類型，不能為空]
 #Rtn[註冊器]
 """)]
 	public static partial ITestFnRegister MkRegister(
@@ -69,21 +39,53 @@ var R = Node.{{nameof(ITestFnRegisterExtn.MkRegister)}}<TestCalculator>(
 	);
 
 	[Doc($$"""
-	#Sum[只用一個被測函數名建註冊器。]
-	#Descr[
-	「一個文件只測一個被測函數」時最貼合的寫法。
-	]
-	#TParams([測試類類型，須實作 `{{nameof(ITester)}}`])
-	#Params([[要掛用例的節點],
-		[被測類型],
-		[被測函數名，必須用 `nameof`],
-		[用例名前綴，默認不加]])
-	#Rtn[註冊器]
-	""")]
+只用一個被測類型 + 一個被測函數名建註冊器。
+
+#Prm[{{nameof(TesteeFnName)}}][必須用 `nameof`]
+#Prm[{{nameof(UniqNamePrefix)}}][用例名前綴，默認不加]
+#Rtn[註冊器]
+""")]
 	public static partial ITestFnRegister MkRegister<TTester>(
 		this ITestNode z
 		,Type TesteeType
 		,str TesteeFnName
+		,str UniqNamePrefix = ""
+	);
+
+	[Doc($$"""
+	0.1.1 的舊名，與 `{{nameof(MkRegister)}}({{nameof(TesterType)}}, ...)` 完全等價。
+	
+	只為讓按舊版 API 寫的代碼照原樣編譯；新代碼請用 `{{nameof(MkRegister)}}`。
+	
+	#Prm[{{nameof(TesterType)}}][測試類類型，不能為空]
+	#Prm[{{nameof(TesteeTypes)}}][被測類型列表]
+	#Prm[{{nameof(TesteeFnNames)}}][被測函數名列表]
+	#Prm[{{nameof(UniqNamePrefix)}}][用例名前綴，默認不加]
+	#Rtn[註冊器]
+	""")]
+	public static partial ITestFnRegister MkTestFnRegister(
+		this ITestNode z
+		,Type TesterType
+		,IList<Type> TesteeTypes
+		,IList<str> TesteeFnNames
+		,str UniqNamePrefix = ""
+	);
+
+	[Doc($$"""
+	0.1.1 的舊名，與 `{{nameof(MkRegister)}}<{{nameof(TTester)}}>` 完全等價。
+	
+	只為讓按舊版 API 寫的代碼照原樣編譯；新代碼請用 `{{nameof(MkRegister)}}`。
+	
+	#TPrm[{{nameof(TTester)}}][測試類類型，須實作 `{{nameof(ITester)}}`]
+	#Prm[{{nameof(TesteeTypes)}}][被測類型列表，可不給]
+	#Prm[{{nameof(TesteeFnNames)}}][被測函數名列表，可不給]
+	#Prm[{{nameof(UniqNamePrefix)}}][用例名前綴，默認不加]
+	#Rtn[註冊器]
+	""")]
+	public static partial ITestFnRegister MkTestFnRegister<TTester>(
+		this ITestNode z
+		,IList<Type>? TesteeTypes = null
+		,IList<str>? TesteeFnNames = null
 		,str UniqNamePrefix = ""
 	);
 }

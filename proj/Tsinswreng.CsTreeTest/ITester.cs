@@ -3,20 +3,18 @@ using Tsinswreng.CsCore;
 namespace Tsinswreng.CsTreeTest;
 
 [Doc($$"""
-測試類要實現的接口
+測試類：把自己要跑的用例掛到給定的節點上。
+
+測試類由 `{{nameof(TestMgr)}}` 在 `{{nameof(TestMgr.Init)}}` 時 `new` 出來（無參構造，依賴自取），
+再回調 `{{nameof(RegisterTestsInto)}}`。
 """)]
 public interface ITester{
 	[Doc($$"""
-#Sum[把自己要註冊的用例掛到 `Node` 上，再把 `Node` 返回。]
-#Descr[
-`Node` 為空時自行新建一個節點並返回，
-這樣調用方可以脫離測試樹單獨跑本測試類。
-實現本方法時只負責掛用例，
-不要在這裏跑用例。
-]
-#Params([[框架給的掛載點；測試管理器一定傳非空值，
-	只在單獨調用本方法時才可能為空]])
-#Rtn[掛好用例的那個節點，通常就是傳進來的 `Node`]
+把用例掛到 `{{nameof(Node)}}` 上並返回它；Node 為空時自建一個。
+
+只掛用例，不在這裏跑用例。
+
+#Rtn[掛好用例的那個節點]
 """)]
 	ITestNode RegisterTestsInto(ITestNode? Node);
 }

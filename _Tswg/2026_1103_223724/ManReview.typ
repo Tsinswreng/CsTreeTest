@@ -1,3 +1,12 @@
+-T[2026_1104_222314][
+	看doc-attr 處理一下這個庫的註釋。按doc-attr的規範來。
+	另外有些地方的註釋就是一坨屎 甚麼狗屎都往上說 註釋寫得比代碼還多
+	你都去處理一下
+][
+	
+]
+
+
 -T[2026_1103_223735][
 ````cs
 File: e:\_code\Ngan\TswgLib\CsTreeTest\proj\Tsinswreng.CsTreeTest\ITestNode.cs
@@ -43,3 +52,4 @@ File: e:\_code\Ngan\TswgLib\CsTreeTest\proj\Tsinswreng.CsTreeTest\ITestNode.cs
 ][
 	
 ]
+
