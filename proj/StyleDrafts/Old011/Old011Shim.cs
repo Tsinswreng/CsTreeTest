@@ -52,26 +52,3 @@ public abstract class DiEtTestMgr{
 		Tester.RegisterTestsInto(Node);
 	}
 }
-
-/// <summary>舊版擴展方法的仿真殼。</summary>
-public static class ExtnOld011{
-	/// <summary>
-	/// 舊版的用例註冊入口。名字與形狀照抄 0.1.1，
-	/// 內部直接轉發給庫本體的同義 API，
-	/// 這樣「250 處調用點原樣保留」這件事可以真的編譯驗證。
-	/// </summary>
-	/// <param name="z">用例要掛上去的節點。</param>
-	/// <param name="TesterType">所屬測試類類型。</param>
-	/// <param name="TesteeTypes">被測類型列表。</param>
-	/// <param name="TesteeFnNames">被測函數名列表。</param>
-	/// <param name="UniqNamePrefix">用例名前綴。</param>
-	public static ITestFnRegister MkTestFnRegister(
-		this ITestNode z
-		,Type TesterType
-		,IList<Type> TesteeTypes
-		,IList<str> TesteeFnNames
-		,str UniqNamePrefix = ""
-	){
-		return z.MkRegister(TesterType, TesteeTypes, TesteeFnNames, UniqNamePrefix);
-	}
-}

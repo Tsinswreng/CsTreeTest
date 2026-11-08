@@ -23,9 +23,6 @@ public static class Program{
 
 		var Summary = await new TreeTestExecutor().RunEtPrint(Mgr.Root);
 
-		// 篩選照樣可用：按被測函數名挑，命中幾條就不再跑，只印條數。
-		var Hits = Mgr.Filter().TesteeFn(nameof(SampleDomain.Cart.ISvcCart.RemoveItem)).Select();
-		Console.WriteLine($"[篩選] RemoveItem 命中 {Hits.Count} 條");
 
 		return Summary.Failed > 0 ? 1 : 0;
 	}

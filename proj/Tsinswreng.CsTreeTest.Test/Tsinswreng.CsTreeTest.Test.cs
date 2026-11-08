@@ -10,7 +10,7 @@ namespace Tsinswreng.CsTreeTest.Test;
 #Descr[
 步驟與真實測試工程完全一致：
 + 組裝容器（本工程用真的微軟依賴注入）並交給全局依賴來源；
-+ 初始化測試管理器（測試類此刻才被實例化）；
++ 初始化測試樹（測試類此刻才被實例化）；
 + 執行全部用例，並按失敗數決定進程退出碼。
 
 本工程是測試程序集，
@@ -41,13 +41,15 @@ internal class Program{
 		SvcColct.AddSingleton<IFakeSvc, FakeSvc>();
 		Di.SvcProvider = SvcColct.BuildServiceProvider();
 
-		// 步驟2：初始化。測試類此刻被實例化並把用例掛到樹上。
+		// 步驟2：給測試樹一個根節點，再初始化。測試類此刻被實例化並把用例掛到樹上。
 		var Mgr = CsTreeTestTestMgr.Inst;
+		Mgr.TestNode = new TestNode();
 		Mgr.Init();
+		Mgr.Inited = true;
 
 		// 步驟3：跑全部用例，按失敗數決定退出碼。
 		var Executor = new TreeTestExecutor();
-		var Summary = await Executor.RunEtPrint([Mgr.Root]);
+		var Summary = await Executor.RunEtPrint([Mgr.TestNode]);
 		return Summary.Failed > 0 ? 1 : 0;
 	}
 }

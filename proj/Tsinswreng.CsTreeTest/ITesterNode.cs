@@ -15,7 +15,7 @@ public interface ITesterNode:ITestNode{
 	[Doc($$"""
 測試類實例。
 
-由 `{{nameof(TestMgr.Init)}}` 自行 `new` 出來後填入——框架不經過依賴容器。
+由裝配方自行 `new` 出來後填入——框架不經過依賴容器。
 """)]
 	ITester? Tester{get;set;}
 }

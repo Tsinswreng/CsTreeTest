@@ -21,7 +21,7 @@ public partial class TestExecutor{
 	private static partial void AddCase(ITestNode Parent, str UniqName, FnTest Fn);
 
 	[Doc($$"""
-#Sum[建一棵首層帶 `{{nameof(TestSelection.Count)}}` 個用例的臨時樹並執行。]
+#Sum[建一棵首層帶 若干個用例的臨時樹並執行。]
 #Descr[
 每個用例把執行的次序記進 `Seen`，
 用例之間以奇偶交錯的延時放大「亂序」的風險：

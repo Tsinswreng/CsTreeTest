@@ -6,11 +6,11 @@ namespace Tsinswreng.CsTreeTest;
 [Doc($$"""
 測試類：自己持有一棵子樹，並往子樹裏填內容。
 
-新寫法實作 `{{nameof(TestNode)}}`、{{nameof(Inited)}}、`{{nameof(Init)}}` 與 `{{nameof(AddTestCase)}}`，
-通常直接繼承 `{{nameof(Tester)}}` 即可。
+新寫法實作 `{{nameof(TestNode)}}`、`{{nameof(Inited)}}` 與 `{{nameof(Init)}}`，通常直接繼承 `{{nameof(Tester)}}` 即可。
+掛子測試類與掛用例的動作見 `{{nameof(ITesterExtn)}}`。
 
 舊寫法只實作 `{{nameof(RegisterTestsInto)}}`，該成員已標過時，留着只為讓既有代碼繼續編譯。
-舊實作不提供新成員，取用 `{{nameof(TestNode)}}` 或 `{{nameof(AddTestCase)}}` 會拋 `NotSupportedException`。
+舊實作不提供新成員，取用 `{{nameof(TestNode)}}` 會拋 `NotSupportedException`。
 """)]
 public interface ITester{
 	[Doc($$"""
@@ -45,21 +45,6 @@ public interface ITester{
 	舊寫法的測試類此方法為空，內容在 `{{nameof(RegisterTestsInto)}}` 裏掛。
 	""")]
 	void Init() { }
-
-	[Doc($$"""
-	往本測試類的節點下掛一條用例。
-
-	用例節點的唯一名即 `{{nameof(UniqName)}}`；用例本體包成 `{{nameof(TestCase)}}` 放進節點的 `{{nameof(ITestNode.Data)}}`。
-
-	#Prm[{{nameof(UniqName)}}][用例名，全樹唯一；要能看出所測行為]
-	#Prm[{{nameof(FnTest)}}][用例本體]
-	#Rtn[結果，取出新建的用例節點]
-	""")]
-	IResAddTestCase AddTestCase(str UniqName, FnTest FnTest){
-		throw new NotSupportedException(
-			"This tester implements only the legacy RegisterTestsInto API and cannot add cases this way."
-		);
-	}
 
 	[Obsolete($$"""
 	舊寫法：把用例掛到 `{{nameof(Node)}}` 上並返回它；Node 為空時自建一個。

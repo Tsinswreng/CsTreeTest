@@ -29,10 +29,7 @@ public class TestCase : ITestCase{
 """)]
 	public IList<str> TesteeFnNames{get;set;} = [];
 
-	[Doc($$"""
-默認取 UUID。
-#See[{{nameof(ITestCase.UniqName)}}]
-""")]
-	//public str UniqName{get;set;} = U128Id.NewUlid().ToLow64Base();
+	
+	[Obsolete]
 	public str UniqName{get;set;} = new Guid().ToString();
 }

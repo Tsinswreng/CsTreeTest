@@ -22,10 +22,6 @@ public static class Program{
 
 		var Summary = await new TreeTestExecutor().RunEtPrint(Mgr.Root);
 
-		// 篩選照樣可用：按被測類型挑。
-		// 但按「測試類」挑就沒有了——本寫法沒有測試類這個概念。
-		var Hits = Mgr.Filter().TesteeType<SampleDomain.Cart.ISvcCart>().Select();
-		Console.WriteLine($"[篩選] ISvcCart 命中 {Hits.Count} 條");
 
 		return Summary.Failed > 0 ? 1 : 0;
 	}

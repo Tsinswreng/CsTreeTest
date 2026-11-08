@@ -15,10 +15,11 @@ public static class Program{
 
 		// 第二步：初始化，測試類此刻被實例化並掛用例。
 		var Mgr = CartTestMgr.Inst;
+		Mgr.TestNode = new TestNode();
 		Mgr.Init();
 
 		// 第三步：跑。
-		var Summary = await new TreeTestExecutor().RunEtPrint(Mgr.Root);
+		var Summary = await new TreeTestExecutor().RunEtPrint(Mgr.TestNode);
 		return Summary.Failed > 0 ? 1 : 0;
 	}
 }

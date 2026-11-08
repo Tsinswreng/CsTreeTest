@@ -13,15 +13,14 @@ namespace Tsinswreng.CsTreeTest.Drafts;
 /// 若依賴改成*用例執行時*才取，就沒有任何東西需要在建樹前就緒，
 /// 樹可以在第一次用到的時候直接建好。
 ///
-/// 建樹時機：第一次讀 <see cref="Root"/> 或 <see cref="Index"/>。
+/// 建樹時機：第一次讀 <see cref="Root"/> 。
 /// 用懶建而不是建構子裏建，是為了避開「基底建構子裏虛調 SetupTree」這個坑
 /// （派生類的欄位初始化器還沒跑）。
 /// </remarks>
-public abstract class TestMgrV2 : ITestMgr{
+public abstract class TestMgrV2{
 	private readonly object _Sync = new();
-	private readonly List<ITestMgr> _SubMgrs = [];
+	private readonly List<TestMgrV2> _SubMgrs = [];
 	private ITestNode? _Root;
-	private TestIndex _Index = new();
 
 	/// <summary>測試樹的根。第一次讀它就建樹；之後讀到的是同一棵樹。</summary>
 	public ITestNode Root{
@@ -32,15 +31,8 @@ public abstract class TestMgrV2 : ITestMgr{
 	}
 
 	/// <summary>索引。與 <see cref="Root"/> 同時建立，建好之後包含整棵樹的節點。</summary>
-	public TestIndex Index{
-		get{
-			EnsureBuilt();
-			return _Index;
-		}
-	}
-
 	/// <summary>
-	/// 兼容 <see cref="ITestMgr"/> 的形狀。本版不需要「初始化」這一步，
+	/// 兼容 <see cref="TestMgrV2"/> 的形狀。本版不需要「初始化」這一步，
 	/// 調它只是取根（已經建好就原樣返回，可重複調用）。
 	/// </summary>
 	public ITestNode Init() => Root;
@@ -57,7 +49,7 @@ public abstract class TestMgrV2 : ITestMgr{
 
 	/// <summary>收編另一個測試管理器。必須在 <see cref="SetupTree"/> 裏聲明。</summary>
 	/// <param name="SubMgr">下級管理器。</param>
-	public void RegisterSubMgr(ITestMgr SubMgr){
+	public void RegisterSubMgr(TestMgrV2 SubMgr){
 		ArgumentNullException.ThrowIfNull(SubMgr);
 		lock(_Sync){
 			if(_Root is not null){
@@ -108,12 +100,6 @@ public abstract class TestMgrV2 : ITestMgr{
 				MountSubMgr(Root, SubMgr);
 			}
 
-			// 樹建完才建索引：整棵樹一次走完，不必在各處邊掛邊補索引。
-			var Index = new TestIndex();
-			foreach(var Node in Root.Walk()){
-				Index.Add(Node);
-			}
-			_Index = Index;
 		}
 	}
 
@@ -125,7 +111,7 @@ public abstract class TestMgrV2 : ITestMgr{
 	/// 因為子管理器自己的根只為它自己成樹而存在，
 	/// 直接接上來會撞名（父根也叫 <c>Tests</c>）。
 	/// </remarks>
-	private static void MountSubMgr(ITestNode Root, ITestMgr SubMgr){
+	private static void MountSubMgr(ITestNode Root, TestMgrV2 SubMgr){
 		var SubRoot = SubMgr.Init();
 		var Mounted = Root.NewChild(SubMgr.GetType().Name);
 		Mounted.Ordered = SubRoot.Ordered;

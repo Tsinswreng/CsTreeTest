@@ -26,7 +26,7 @@ public static class Di{
 #Sum[根源服務提供器。]
 #Descr[
 入口在 `BuildServiceProvider()` 之後賦值，
-必須早於測試管理器的 `{{nameof(TestMgr.Init)}}()`。
+必須早於測試樹的 `Init()`。
 未賦值就取用會抛 `InvalidOperationException`，
 避免拿到 `null` 後在別處產生更難查的錯誤。
 ]

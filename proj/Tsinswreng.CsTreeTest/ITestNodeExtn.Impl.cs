@@ -28,6 +28,41 @@ public static partial class ITestNodeExtn{
 		return R;
 	}
 
+	public static partial IResAddTestCase AddTestCase(this ITestNode z, str UniqName, FnTest FnTest){
+		// 1: 造用例。用例名在節點上，不必另存一份。
+		var testCase = new TestCase{
+			FnTest = FnTest,
+		};
+		// 2: 掛成子節點；父子兩邊的引用都要補。
+		var newNode = new TestNode{
+			UniqName = UniqName,
+			Data = testCase,
+			Parents = [z],
+		};
+		z.Children.Add(newNode);
+		// 3: 把新節點交回調用方，方便它接着設旗標或掛子節點。
+		return new ResAddTestCase{
+			NewTestNode = newNode,
+		};
+	}
+
+	public static partial IEnumerable<ITestNode> Walk(this ITestNode z){
+		yield return z;
+		foreach(var child in z.Children){
+			foreach(var descendant in child.Walk()){
+				yield return descendant;
+			}
+		}
+	}
+
+	public static partial IEnumerable<ITestNode> WalkCases(this ITestNode z){
+		foreach(var node in z.Walk()){
+			if(node.Data is not null){
+				yield return node;
+			}
+		}
+	}
+
 	public static partial IList<str> PathFromRoot(this ITestNode z){
 		var R = new List<str>();
 		ITestNode? Cur = z;

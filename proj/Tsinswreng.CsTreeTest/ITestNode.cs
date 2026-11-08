@@ -14,7 +14,7 @@ public interface ITestNode{
 節點唯一名。同樹內不得重複，重複時建索引拋異常。
 
 默認有 UUID 值，所以節點默認就能掛上去；
-要按名查找（`{{nameof(TestMgrExtn.GetNodeByName)}}`）或要失敗路徑可讀時，才需要顯式給名。
+要按名查找或要失敗路徑可讀時，才需要顯式給名。
 """)]
 	str UniqName{get;set;}
 

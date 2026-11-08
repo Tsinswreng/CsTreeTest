@@ -4,6 +4,15 @@ namespace Tsinswreng.CsTreeTest;
 
 // 實現文件：只放函數實現。
 public static partial class ITesterExtn{
+	public static partial IResAddTestCase AddTestCase(
+		this ITester z
+		,str UniqName
+		,FnTest FnTest
+	){
+		// 能力在節點上，這裏只負責把「本測試類的節點」指出來。
+		return z.TestNode.AddTestCase(UniqName, FnTest);
+	}
+
 	public static partial void AddTester<TTester>(this ITester z) where TTester: ITester, new(){
 		z.AddTester(new TTester(), typeof(TTester));
 	}

@@ -55,13 +55,14 @@ public static class Program{
 		// 第二步：初始化測試管理器。
 		// 測試類此刻被實例化，因此必須在第一步之後。
 		var Mgr = MyProj1TestMgr.Inst;
+		Mgr.TestNode = new TestNode();
 		Mgr.Init();
 
 		// 第三步：挑範圍執行。
 		ITestExecutor Executor = new TreeTestExecutor();
 
 		// 3.1 全部用例一鍵跑完。
-		// await Executor.RunEtPrint(Mgr.Root);
+		// await Executor.RunEtPrint(Mgr.TestNode);
 
 		// 3.2 只跑某一個測試類。
 		// await Executor.RunEtPrint(Mgr.GetNodeByTesterType(typeof(TestCalculator)));
@@ -70,15 +71,7 @@ public static class Program{
 		// var ByFn = Mgr.GetNodesByTesteeFnName(nameof(ICalculator.Add));
 		// await Executor.RunEtPrint(ByFn);
 
-		// 3.4 用篩選器挑：
-		// 測 ICalculator、且名字帶「正數」的用例。
-		// 先看命中哪些，再跑。
-		var Hits = Mgr.Filter()
-			.TesteeType<ICalculator>()
-			.NameContains("正數")
-			.Select();
-		Hits.PrintHits();
-		var Summary = await Hits.RunEtPrint();
+		var Summary = await Executor.RunEtPrint(Mgr.TestNode);
 		return Summary.Failed > 0 ? 1 : 0;
 	}
 }

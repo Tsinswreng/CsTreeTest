@@ -4,67 +4,38 @@ using Tsinswreng.CsTreeTest;
 
 namespace MyProj1.Test;
 
-[Doc("""
-#Sum[本測試工程的測試管理器：聲明本工程有哪些測試類。]
+[Doc($$"""
+#Sum[本測試工程的測試樹。]
 
 #Descr[
-*每個測試工程的 csproj 都要有一個 TestMgr*，
-本工程的全部測試類都在 `SetupTree` 裏聲明。
+本工程只有一個測試類 `TestCalculator`，直接掛在根下。
 
-爲甚麼要分兩步（先聲明、後初始化）：
-`SetupTree` 只是*聲明*要註冊哪些測試類，
-真正 `new` 出測試類、讓它們把用例掛到樹上、
-以及建立索引，
-都發生在入口調用 `Init()` 的時候。
-這樣測試類的實例化時機就一定晚於依賴來源的就緒時機。
-
-多個測試工程要合併時，
-上層 TestMgr 不必逐個註冊下層的測試類，
-只收編下層的管理器即可：
-
-```cs
-public class AllTestMgr : TestMgr{
-	protected override void SetupTree(){
-		RegisterSubMgr(MyProj1TestMgr.Inst);
-		RegisterSubMgr(MyProj2TestMgr.Inst);
-	}
-}
-```
+用例要在依賴來源就緒之後才掛，
+所以入口先備好依賴，再調 `{{nameof(Init)}}()`。
 ]
 """)]
-public class MyProj1TestMgr : TestMgr{
+public class MyProj1TestMgr : Tester{
 	[Doc("""
-#Sum[本管理器的全局唯一實例。]
-
-#Descr[
-寫成靜態欄位是慣例：
-各處（入口、上層管理器）都用同一個管理器。
-
-這裏不會有「靜態初始化時就開始建樹」的時序問題，
-因爲樹是在 `Init()` 裏才建的，
-測試類也是那時才實例化的。
-]
+#Sum[本測試樹的全局唯一實例。]
 """)]
 	public static MyProj1TestMgr Inst = new();
 
 	[Doc("""
-#Sum[聲明本工程要註冊哪些測試類。]
-
-#Descr[
-只*聲明*，不在這裏 `new` 測試類，
-也不在這裏跑用例。
-
-兩種聲明方式：
-+ `RegisterTester<T>()`：直接掛在根下。
-+ `RegisterTesterIntoBranch<T>("分組名")`：掛到領域分組之下，
-	分組節點會自動建在根下，
-	需要單跑某個領域時以該分組爲篩選範圍即可。
-
-同名測試類只能聲明一次；
-重複聲明會在掛樹建索引時撞上唯一名檢查並抛異常。
-]
+#Sum[把本工程的測試類掛到根節點下。]
 """)]
-	protected override void SetupTree(){
-		this.RegisterTester<TestCalculator>();
+	public override void Init(){
+		// 根節點名固定為 Tests，失敗路徑才可讀。
+		TestNode.UniqName = "Tests";
+		Mount<TestCalculator>(nameof(TestCalculator));
+	}
+
+	[Doc($$"""
+	#Sum[掛一個舊寫法的測試類：由本類建節點，讓它往裏掛用例。]
+	#TPrm[{{nameof(TTester)}}][測試類類型，須有無參構造子]
+	#Prm[{{nameof(NodeName)}}][測試類節點名]
+	""")]
+	private void Mount<TTester>(str NodeName) where TTester: ITester, new(){
+		var node = TestNode.NewTesterChild(typeof(TTester), NodeName);
+		new TTester().RegisterTestsInto(node);
 	}
 }

@@ -11,7 +11,7 @@ namespace SampleCart.StyleC;
 /// 好處是檔數少一層（沒有 <c>_TestXxx.cs</c> 主檔），
 /// 而且管理器檔案一眼看全本工程有哪些測試檔案。
 /// 代價是這個工程不再有「測試類」這個可查詢維度
-/// （<c>TestFilter.TesterType(...)</c> 用不上）。
+/// （按測試類篩選用不上）。
 /// </remarks>
 public class CartTestMgr : TestMgrV2{
 	/// <summary>本管理器的唯一實例。</summary>
