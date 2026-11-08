@@ -17,4 +17,36 @@ public interface ITester{
 #Rtn[掛好用例的那個節點]
 """)]
 	ITestNode RegisterTestsInto(ITestNode? Node);
+	
+
+}
+
+public interface ITester2{
+	public ITestNode TestNode{get;set;}
+	public void Init();
+	public bool Inited{get;set;}
+}
+
+public abstract class Tester2:ITester2{
+	public abstract void Init();
+	public ITestNode TestNode{get;set;}
+	
+	public void AddTester(ITester2 Tester, Type? TesterType){
+		if(!Tester.Inited){
+			Tester.Init();
+		}
+		TestNode.Children.Add(Tester.TestNode);//TswgNote 記錄 TesterType 信息
+	}
+	
+	public void AddTester<TTester>()
+		where TTester: ITester2, new()
+	{
+		var tester = new TTester();
+		AddTester(tester, typeof(TTester));
+	}
+	
+	public void AddTestCase(str UinqName, FnTest FnTest){
+		
+	}
+	
 }

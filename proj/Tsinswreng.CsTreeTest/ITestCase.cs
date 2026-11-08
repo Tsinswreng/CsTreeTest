@@ -29,8 +29,9 @@ public interface ITestCase{
 """)]
 	IList<str> TesteeFnNames{get;set;}
 
-	[Doc($$"""
-用例唯一名，同樹內不得重複；由註冊器按「前綴 + 用例名」生成。
-""")]
+	[Obsolete($$"""
+	{{nameof(ITestCase)}}掛在{{nameof(ITestNode)}}芝潙葉節者。
+	而TestNode已經有UniqName
+	""")]
 	str UniqName{get;set;}
 }
