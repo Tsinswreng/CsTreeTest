@@ -33,10 +33,10 @@ public class TestNode : ITestNode{
 	[Doc($$"""
 #See[{{nameof(ITestNode.Ordered)}}]
 """)]
-	public bool Ordered{get;set;} = false;
+	public bool Ordered{get;set;} = true;
 
 	[Doc($$"""
 #See[{{nameof(ITestNode.IsParallelRecursive)}}]
 """)]
-	public bool IsParallelRecursive{get;set;} = false;
+	public bool IsParallelRecursive{get;set;} = true;
 }
