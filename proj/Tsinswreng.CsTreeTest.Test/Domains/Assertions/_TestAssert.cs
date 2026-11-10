@@ -21,7 +21,7 @@ public partial class TestAssert : ITester{
 `Node ??= new TestNode()` 是爲了讓本測試類也能脫離測試樹單獨跑。
 
 本領域的用例都是純斷言，互不干擾，
-所以不設 `{{nameof(ITestNode.Ordered)}}`、`{{nameof(ITestNode.IsParallelRecursive)}}` 這兩個開關。
+所以不設 `{{nameof(ITestNode.Ordered)}}`、`{{nameof(ITestNode.NonParallelizable)}}` 這兩個開關。
 ]
 #Params([[框架給的掛載點；測試樹一定傳非空值]])
 #Rtn[掛好用例的那個節點]

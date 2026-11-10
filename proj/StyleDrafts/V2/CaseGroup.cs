@@ -11,7 +11,7 @@ namespace Tsinswreng.CsTreeTest.Drafts;
 /// 在建分組時寫一次，之後同檔的每條用例只寫名字與函數體。
 ///
 /// 分組是*真節點*，所以它也能單獨設 <see cref="ITestNode.Ordered"/> 與
-/// <see cref="ITestNode.IsParallelRecursive"/>：
+/// <see cref="ITestNode.NonParallelizable"/>：
 /// 一個被測函數的用例要串行（例如共用同一份測試數據）就標在這一層，
 /// 不必把整個測試類都串起來。
 ///

@@ -56,7 +56,7 @@ public partial class TestCalculator : ITester{
 + 想讓本節點的直接子節點依序跑（例如先插數據、再測、最後清理）：
 	`Node.Ordered = true;`
 + 想讓整棵子樹都不與別的分支同時跑：
-	`Node.IsParallelRecursive = true;`
+	`Node.NonParallelizable = true;`
 
 純函數用例互不干擾，
 所以本示例不設這兩個開關，

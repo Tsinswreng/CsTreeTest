@@ -7,7 +7,7 @@ namespace Tsinswreng.CsTreeTest;
 測試樹節點。跑一個節點等於跑它底下的全部用例。
 
 帶用例的節點是葉子（`{{nameof(Data)}}` 非空），只作分組的節點為空。
-`{{nameof(Ordered)}}` 與 `{{nameof(IsParallelRecursive)}}` 互相獨立，別混用。
+`{{nameof(Ordered)}}` 與 `{{nameof(NonParallelizable)}}` 互相獨立，別混用。
 """)]
 public interface ITestNode{
 	[Doc($$"""
@@ -37,7 +37,7 @@ public interface ITestNode{
 為真時，直接子節點依序執行。不遞歸。
 
 只管直接子節點之間的先後，子節點內部仍可並行。
-要整棵子樹不與別的分支同時跑，用 `{{nameof(IsParallelRecursive)}}`。
+要整棵子樹不與別的分支同時跑，用 `{{nameof(NonParallelizable)}}`。
 """)]
 	bool Ordered{get;set;}
 
@@ -47,5 +47,5 @@ public interface ITestNode{
 向下繼承，標在最外層即可。默認為 `false`。
 與 `{{nameof(Ordered)}}` 互相獨立，可同時生效。
 """)]
-	bool IsParallelRecursive{get;set;}
+	bool NonParallelizable{get;set;}
 }

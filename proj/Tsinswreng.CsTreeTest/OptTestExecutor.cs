@@ -15,7 +15,7 @@ public class OptTestExecutor{
 	[Doc($$"""
 是否並行；默認 `true`。為假時整棵樹單線程按收集順序（先序）跑。
 
-這是全局總閘，與 `{{nameof(ITestNode.IsParallelRecursive)}}` 互相獨立；任一要求不並行，該項就不並行。
+這是全局總閘，與 `{{nameof(ITestNode.NonParallelizable)}}` 互相獨立；任一要求不並行，該項就不並行。
 """)]
 	public bool IsParallel = true;
 

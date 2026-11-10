@@ -24,7 +24,7 @@ public partial class TestExecutor : ITester{
 只按被測函數逐片調用各分片的註冊方法，
 + `Run` 的用例在 `TestRun.cs`；
 + `{{nameof(ITestNode.Ordered)}}` 的用例在 `TestOrdered.cs`；
-+ `{{nameof(ITestNode.IsParallelRecursive)}}` 的用例在 `TestIsParallelRecursive.cs`。
++ `{{nameof(ITestNode.NonParallelizable)}}` 的用例在 `TestNonParallelizable.cs`。
 ]
 #Params([[要掛用例的節點；傳空則自行新建一個]])
 #Rtn[掛好用例的節點]

@@ -93,7 +93,7 @@ public sealed partial class TreeTestExecutor : ITestExecutor{
 收集單個子樹，攤平成階段列表。
 
 葉子＝單階段單項；`{{nameof(ITestNode.Ordered)}}` 子節點首尾相接成串行鏈；其它按階段序號合併，同層因此可並行。
-`{{nameof(ITestNode.IsParallelRecursive)}}` 按「父繼承或自身」往下傳。
+`{{nameof(ITestNode.NonParallelizable)}}` 按「父繼承或自身」往下傳。
 
 #Rtn[本子樹的階段列表]
 """)]
@@ -101,7 +101,7 @@ public sealed partial class TreeTestExecutor : ITestExecutor{
 		ITestNode Node,
 		str Path,
 		ref int Order,
-		bool ParentIsParallelRecursive
+		bool ParentNonParallelizable
 	);
 
 	[Doc($$"""

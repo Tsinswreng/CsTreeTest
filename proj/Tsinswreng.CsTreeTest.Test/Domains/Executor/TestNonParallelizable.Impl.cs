@@ -4,18 +4,18 @@ namespace Tsinswreng.CsTreeTest.Test.Domains.Executor;
 
 // 實現文件：只放函數實現。
 public partial class TestExecutor{
-	public partial void RegisterIsParallelRecursive(ITestNode Node){
+	public partial void RegisterNonParallelizable(ITestNode Node){
 		var R = Node.MkRegister<TestExecutor>(
 			typeof(ITestNode)
-			,nameof(ITestNode.IsParallelRecursive)
+			,nameof(ITestNode.NonParallelizable)
 			,"Para:"
 		).Register;
 
-		R(nameof(IsParallelRecursiveKeepsSubtreeOutOfParallel), IsParallelRecursiveKeepsSubtreeOutOfParallel!);
-		R(nameof(IsParallelRecursiveIsInheritedDownwards), IsParallelRecursiveIsInheritedDownwards!);
+		R(nameof(NonParallelizableKeepsSubtreeOutOfParallel), NonParallelizableKeepsSubtreeOutOfParallel!);
+		R(nameof(NonParallelizableIsInheritedDownwards), NonParallelizableIsInheritedDownwards!);
 	}
 
-	public partial async Task<nil> IsParallelRecursiveKeepsSubtreeOutOfParallel(obj? O){
+	public partial async Task<nil> NonParallelizableKeepsSubtreeOutOfParallel(obj? O){
 		var T = Assert.IsTrue;
 		var Probe = new ConcurrencyProbe();
 		var Host = new TestNode{UniqName = "Ser"};
@@ -23,7 +23,7 @@ public partial class TestExecutor{
 		// 每棵內部兩條用例。
 		for(var b = 0; b < 2; b++){
 			var Branch = Host.NewChild($"B{b}");
-			Branch.IsParallelRecursive = true;
+			Branch.NonParallelizable = true;
 			for(var i = 0; i < 2; i++){
 				AddCase(Branch, $"{b}_{i}", async (o2) => await Probe.Run());
 			}
@@ -38,7 +38,7 @@ public partial class TestExecutor{
 		return NIL;
 	}
 
-	public partial async Task<nil> IsParallelRecursiveIsInheritedDownwards(obj? O){
+	public partial async Task<nil> NonParallelizableIsInheritedDownwards(obj? O){
 		var T = Assert.IsTrue;
 		var Probe = new ConcurrencyProbe();
 		var Host = new TestNode{UniqName = "Deep"};
@@ -46,7 +46,7 @@ public partial class TestExecutor{
 		// 用例掛在三層之下，
 		// 仍應受約束。
 		var Outer = Host.NewChild("Outer");
-		Outer.IsParallelRecursive = true;
+		Outer.NonParallelizable = true;
 		var Mid = Outer.NewChild("Mid");
 		AddCase(Mid, "deep0", async (o2) => await Probe.Run());
 		var Mid2 = Outer.NewChild("Mid2");

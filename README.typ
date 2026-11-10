@@ -34,7 +34,7 @@
 			- 帶一個測試用例 `Data`
 			- 帶多個子節點 `Children`
 			- 控制是否按順序執行 `Ordered`
-			- 控制整個遞歸子樹是否禁並行 `IsParallelRecursive`
+			- 控制整個遞歸子樹是否禁並行 `NonParallelizable`
 		]
 
 		#H[ITestCase][
@@ -74,7 +74,7 @@
 
 			- 並行執行
 			- 按樹層次切分 stage
-			- 在 `Ordered` 或 `IsParallelRecursive` 場景下順序執行
+			- 在 `Ordered` 或 `NonParallelizable` 場景下順序執行
 			- 統計通過/失敗/耗時
 			- 輸出失敗詳情與總結
 		]
@@ -116,7 +116,7 @@
 				public ITestNode RegisterTestsInto(ITestNode? Node) {
 					Node ??= new TestNode();
 					Node.Ordered = false;
-					Node.IsParallelRecursive = false;
+					Node.NonParallelizable = false;
 					RegisterAdd(Node);
 					RegisterTryIntDivide(Node);
 					return Node;
@@ -174,7 +174,7 @@
 
 	#H[執行模型][
 		- `Ordered = true` 時，當前節點的直接子節點按順序執行
-		- `IsParallelRecursive = true` 時，整個遞歸子樹都不並行
+		- `NonParallelizable = true` 時，整個遞歸子樹都不並行
 		- 默認情況下，executor 會盡量並行跑不同 stage 的可並行項
 
 		這很適合下面這類測試：

@@ -9,7 +9,7 @@ public partial class TestExecutor{
 		Node.Ordered = true;
 		RegisterRun(Node);
 		RegisterOrdered(Node);
-		RegisterIsParallelRecursive(Node);
+		RegisterNonParallelizable(Node);
 		return Node;
 	}
 }

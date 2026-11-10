@@ -31,12 +31,16 @@ public class TestNode : ITestNode{
 	public IList<ITestNode> Parents{get;set;} = [];
 
 	[Doc($$"""
+默認為假：不約束直接子節點的先後，讓它們按階段並行，這是默認的最快路徑。
+要串行就顯式設真。
 #See[{{nameof(ITestNode.Ordered)}}]
 """)]
-	public bool Ordered{get;set;} = true;
+	public bool Ordered{get;set;} = false;
 
 	[Doc($$"""
-#See[{{nameof(ITestNode.IsParallelRecursive)}}]
+默認為假：不禁並行，讓用例盡量同時跑，這是默認的最快路徑。
+要讓整棵子樹獨佔執行就顯式設真。
+#See[{{nameof(ITestNode.NonParallelizable)}}]
 """)]
-	public bool IsParallelRecursive{get;set;} = true;
+	public bool NonParallelizable{get;set;} = false;
 }

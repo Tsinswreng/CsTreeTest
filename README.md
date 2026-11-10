@@ -45,7 +45,7 @@ dotnet add package Tsinswreng.CsTreeTest
 - 帶一個測試用例 `Data`
 - 帶多個子節點 `Children`
 - 控制直接子節點是否按順序執行 `Ordered`（不遞歸）
-- 控制整個遞歸子樹是否不參與並行 `IsParallelRecursive`（向下繼承）
+- 控制整個遞歸子樹是否不參與並行 `NonParallelizable`（向下繼承）
 
 #### ITestCase
 
@@ -115,7 +115,7 @@ global using static MyProj1.Test.Di;
 
 - 並行執行（默認開）
 - 按樹層次切分 stage，跨層有屏障
-- 在 `Ordered` 或 `IsParallelRecursive` 場景下順序執行
+- 在 `Ordered` 或 `NonParallelizable` 場景下順序執行
 - 統計通過 / 失敗 / 耗時
 - 輸出失敗詳情與總結
 
@@ -217,7 +217,7 @@ public class MyProj1TestMgr : TestMgr{
 ### 執行模型
 
 - `Ordered = true` 時，當前節點的直接子節點按順序執行，不遞歸
-- `IsParallelRecursive = true` 時，整個遞歸子樹都不參與並行，向下繼承
+- `NonParallelizable = true` 時，整個遞歸子樹都不參與並行，向下繼承
 - 默認情況下，executor 並行跑同層各分支的可並行項
 
 這很適合下面這類測試：

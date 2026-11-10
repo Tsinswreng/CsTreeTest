@@ -142,11 +142,11 @@ public sealed partial class TreeTestExecutor{
 		ITestNode Node,
 		str Path,
 		ref int Order,
-		bool ParentIsParallelRecursive
+		bool ParentNonParallelizable
 	){
 		// 不並行標記：繼承下來的與本節點自己的取或，
 		// 算出的結果再往下傳（向下繼承）。
-		var ShouldNotParallelize = ParentIsParallelRecursive || Node.IsParallelRecursive;
+		var ShouldNotParallelize = ParentNonParallelizable || Node.NonParallelizable;
 
 		// 情形一：葉子節點（帶用例）——
 		// 本子樹只有一個階段、一項。

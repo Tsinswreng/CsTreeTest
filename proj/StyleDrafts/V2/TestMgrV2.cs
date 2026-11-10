@@ -115,7 +115,7 @@ public abstract class TestMgrV2{
 		var SubRoot = SubMgr.Init();
 		var Mounted = Root.NewChild(SubMgr.GetType().Name);
 		Mounted.Ordered = SubRoot.Ordered;
-		Mounted.IsParallelRecursive = SubRoot.IsParallelRecursive;
+		Mounted.NonParallelizable = SubRoot.NonParallelizable;
 		foreach(var Child in SubRoot.Children.ToList()){
 			Mounted.Children.Add(Child);
 			Child.Parents.Clear();
