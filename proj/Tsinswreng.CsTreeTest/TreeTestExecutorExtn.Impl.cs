@@ -68,9 +68,9 @@ public static partial class TreeTestExecutorExtn{
 			}
 			// 測試類類型可能為空（用例不是經註冊器造的），此時給個佔位名。
 			var TesterName = Result.TestCase.TesterType?.Name ?? "UnknownTester";
-			WriteWithColor("[失敗]", ConsoleColor.Red);
-			Console.WriteLine($" {TesterName}/{Result.TestCase.UniqName} （{Result.Elapsed}）");
-			Console.WriteLine($"    用例路徑：{Result.NodePath}");
+			WriteWithColor("[FAILED]", ConsoleColor.Red);
+			Console.WriteLine($" {TesterName}/{Result.TestCase.UniqName} ({Result.Elapsed})");
+			Console.WriteLine($"    Case path: {Result.NodePath}");
 			if(Result.Exception is not null){
 				WriteLineWithColor(Result.Exception.ToString(), ConsoleColor.DarkRed);
 			}
@@ -79,20 +79,20 @@ public static partial class TreeTestExecutorExtn{
 		Console.WriteLine();
 		WriteWithColor($"[{nameof(CsTreeTest)}]", ConsoleColor.Cyan);
 		Console.WriteLine();
-		Console.WriteLine($"總數={Summary.Total}");
+		Console.WriteLine($"Total={Summary.Total}");
 		// 通過數非零才標綠，避免 0 通過時誤導性地顯示綠色。
 		WriteWithColor(
-			$"通過={Summary.Passed}"
+			$"Passed={Summary.Passed}"
 			,Summary.Passed > 0 ? ConsoleColor.Green : Console.ForegroundColor
 		);
 		Console.WriteLine();
 		// 同上：有失敗才標紅。
 		WriteWithColor(
-			$"失敗={Summary.Failed}"
+			$"Failed={Summary.Failed}"
 			,Summary.Failed > 0 ? ConsoleColor.Red : Console.ForegroundColor
 		);
 		Console.WriteLine();
-		Console.WriteLine($"耗時={Summary.Elapsed}");
+		Console.WriteLine($"Elapsed={Summary.Elapsed}");
 		Console.WriteLine();
 	}
 

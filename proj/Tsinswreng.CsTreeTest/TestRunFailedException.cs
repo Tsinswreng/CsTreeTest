@@ -16,7 +16,6 @@ public sealed partial class TestRunFailedException : Exception{
 	public TestRunSummary Summary{get;}
 
 	[Doc($$"""
-消息固定為「測試有失敗。總數＝…，通過＝…，失敗＝…」。
 #Prm[{{nameof(Summary)}}][那次執行的匯總]
 """)]
 	public partial TestRunFailedException(TestRunSummary Summary);
