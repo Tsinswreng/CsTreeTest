@@ -4,6 +4,7 @@ namespace Tsinswreng.CsTreeTest;
 
 // 實現文件：只放函數實現。
 public static partial class TreeTestExecutorExtn{
+	public static Action<str?> Println = Console.WriteLine;
 	public static partial Task<TestRunSummary> RunTests(
 		this ITestExecutor z
 		,ITestNode Root
@@ -69,31 +70,31 @@ public static partial class TreeTestExecutorExtn{
 			// 測試類類型可能為空（用例不是經註冊器造的），此時給個佔位名。
 			var TesterName = Result.TestCase.TesterType?.Name ?? "UnknownTester";
 			WriteWithColor("[FAILED]", ConsoleColor.Red);
-			Console.WriteLine($" {TesterName}/{Result.TestCase.UniqName} ({Result.Elapsed})");
-			Console.WriteLine($"    Case path: {Result.NodePath}");
+			Println($" {TesterName}/{Result.TestCase.UniqName} ({Result.Elapsed})");
+			Println($"    Case path: {Result.NodePath}");
 			if(Result.Exception is not null){
 				WriteLineWithColor(Result.Exception.ToString(), ConsoleColor.DarkRed);
 			}
 		}
 		// step 2: 打印匯總。
-		Console.WriteLine();
+		Println(null);
 		WriteWithColor($"[{nameof(CsTreeTest)}]", ConsoleColor.Cyan);
-		Console.WriteLine();
-		Console.WriteLine($"Total={Summary.Total}");
+		Println(null);
+		Println($"Total={Summary.Total}");
 		// 通過數非零才標綠，避免 0 通過時誤導性地顯示綠色。
 		WriteWithColor(
 			$"Passed={Summary.Passed}"
 			,Summary.Passed > 0 ? ConsoleColor.Green : Console.ForegroundColor
 		);
-		Console.WriteLine();
+		Println(null);
 		// 同上：有失敗才標紅。
 		WriteWithColor(
 			$"Failed={Summary.Failed}"
 			,Summary.Failed > 0 ? ConsoleColor.Red : Console.ForegroundColor
 		);
-		Console.WriteLine();
-		Console.WriteLine($"Elapsed={Summary.Elapsed}");
-		Console.WriteLine();
+		Println(null);
+		Println($"Elapsed={Summary.Elapsed}");
+		Println(null);
 	}
 
 	private static partial void WriteWithColor(str Text, ConsoleColor Color){
@@ -106,7 +107,7 @@ public static partial class TreeTestExecutorExtn{
 	private static partial void WriteLineWithColor(str Text, ConsoleColor Color){
 		var OldColor = Console.ForegroundColor;
 		Console.ForegroundColor = Color;
-		Console.WriteLine(Text);
+		Println(Text);
 		Console.ForegroundColor = OldColor;
 	}
 }
